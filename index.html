@@ -18,6 +18,22 @@
     --muted: #888;
     --accent: #E8002D;
   }
+  [data-theme="dark"] {
+    --bg: #111113;
+    --surface: #1a1a1e;
+    --surface2: #222226;
+    --border: rgba(255,255,255,0.08);
+    --text: #e8e8e8;
+    --muted: #777;
+  }
+  [data-theme="dark"] .logo-text { color: var(--text); }
+  [data-theme="dark"] .section-title { color: var(--text); }
+  [data-theme="dark"] .cd-num { color: var(--text); }
+  [data-theme="dark"] .bar-track { background: rgba(255,255,255,0.08); }
+  [data-theme="dark"] .sprint-pill { background: rgba(186,117,23,0.2); }
+  [data-theme="dark"] .status-done { background: rgba(255,255,255,0.06); }
+  [data-theme="dark"] .status-next { background: rgba(232,0,45,0.15); }
+  [data-theme="dark"] .status-cancelled { background: rgba(255,100,0,0.12); }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -63,6 +79,9 @@
   .header-right {
     margin-left: auto;
     text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   .last-update {
     font-size: 0.7rem;
@@ -256,6 +275,49 @@
   }
   .detail-loading { color: var(--muted); font-size: 0.8rem; padding: 0.5rem 0; }
 
+  /* Theme toggle */
+  .theme-toggle {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--red); color: var(--text); }
+
+  /* ICS export button */
+  .ics-btn {
+    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    padding: 5px 12px; border-radius: 2px; cursor: pointer;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .ics-btn:hover { border-color: var(--red); color: var(--text); }
+
+  /* Show more button */
+  .show-more-btn {
+    font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 500;
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    padding: 4px 10px; border-radius: 2px; cursor: pointer; margin-top: 6px;
+    transition: all 0.15s;
+  }
+  .show-more-btn:hover { border-color: var(--red); color: var(--text); }
+
+  /* Circuit info */
+  .circuit-info {
+    font-size: 0.75rem; color: var(--muted); margin-bottom: 0.75rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .circuit-info span { white-space: nowrap; }
+
+  /* Chart */
+  .chart-container {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.25rem; margin-top: 2rem;
+  }
+  .chart-header { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+  .chart-tabs { display: flex; gap: 6px; }
+  .chart-canvas { width: 100%; height: 280px; }
+
   @media (max-width: 860px) {
     .two-col { grid-template-columns: 1fr; }
   }
@@ -278,6 +340,7 @@
   <div class="season-badge">2026</div>
   <div class="header-right">
     <div class="last-update" id="last-update">数据加载中...</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换深色模式" aria-label="切换深色模式">☀</button>
   </div>
 </header>
 
@@ -314,7 +377,10 @@
       </div>
 
       <div class="col-schedule">
-        <div class="section-title">赛程</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+          <div class="section-title" style="margin-bottom:0;">赛程</div>
+          <button class="ics-btn" onclick="exportICS()">导出日历 .ics</button>
+        </div>
         <div class="schedule-list" id="schedule-list">
           <div class="loading">加载赛程中...</div>
         </div>
@@ -322,9 +388,35 @@
 
     </div>
 
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="section-title" style="margin-bottom:0;">积分趋势</div>
+        <div class="chart-tabs">
+          <button class="s-tab active" onclick="drawChart('drivers', this)">车手 Top 8</button>
+          <button class="s-tab" onclick="drawChart('constructors', this)">车队</button>
+        </div>
+      </div>
+      <canvas class="chart-canvas" id="chart-canvas"></canvas>
+    </div>
+
 </main>
 
 <script>
+// ─── DARK MODE ─────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? '☀' : '☾';
+  localStorage.setItem('f1-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('f1-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.querySelector('.theme-toggle').textContent = '☾';
+  }
+})();
 // ─── RACE DATA ──────────────────────────────────────────────────────────────
 const races = [
   { r:1,  name:'澳大利亚大奖赛',       flag:'🇦🇺', date:'2026-03-08', end:'2026-03-08', sprint:false, cancelled:false },
@@ -364,13 +456,40 @@ function teamColor(name) {
   return '#888';
 }
 
+// ─── CIRCUIT DATA ──────────────────────────────────────────────────────────
+const circuitInfo = {
+  1:  { circuit:'Albert Park Grand Prix Circuit', city:'Melbourne', laps:58, length:'5.278 km' },
+  2:  { circuit:'Shanghai International Circuit', city:'Shanghai', laps:56, length:'5.451 km' },
+  3:  { circuit:'Suzuka International Racing Course', city:'Suzuka', laps:53, length:'5.807 km' },
+  4:  { circuit:'Bahrain International Circuit', city:'Sakhir', laps:57, length:'5.412 km' },
+  5:  { circuit:'Jeddah Corniche Circuit', city:'Jeddah', laps:50, length:'6.174 km' },
+  6:  { circuit:'Miami International Autodrome', city:'Miami', laps:57, length:'5.412 km' },
+  7:  { circuit:'Circuit Gilles Villeneuve', city:'Montreal', laps:70, length:'4.361 km' },
+  8:  { circuit:'Circuit de Monaco', city:'Monte Carlo', laps:78, length:'3.337 km' },
+  9:  { circuit:'Circuit de Barcelona-Catalunya', city:'Barcelona', laps:66, length:'4.657 km' },
+  10: { circuit:'Red Bull Ring', city:'Spielberg', laps:71, length:'4.318 km' },
+  11: { circuit:'Silverstone Circuit', city:'Silverstone', laps:52, length:'5.891 km' },
+  12: { circuit:'Circuit de Spa-Francorchamps', city:'Spa', laps:44, length:'7.004 km' },
+  13: { circuit:'Hungaroring', city:'Budapest', laps:70, length:'4.381 km' },
+  14: { circuit:'Circuit Zandvoort', city:'Zandvoort', laps:72, length:'4.259 km' },
+  15: { circuit:'Autodromo Nazionale di Monza', city:'Monza', laps:53, length:'5.793 km' },
+  16: { circuit:'Madrid Street Circuit', city:'Madrid', laps:66, length:'5.473 km' },
+  17: { circuit:'Baku City Circuit', city:'Baku', laps:51, length:'6.003 km' },
+  18: { circuit:'Marina Bay Street Circuit', city:'Singapore', laps:62, length:'4.940 km' },
+  19: { circuit:'Circuit of the Americas', city:'Austin', laps:56, length:'5.513 km' },
+  20: { circuit:'Autódromo Hermanos Rodríguez', city:'Mexico City', laps:71, length:'4.304 km' },
+  21: { circuit:'Autódromo José Carlos Pace', city:'São Paulo', laps:71, length:'4.309 km' },
+  22: { circuit:'Las Vegas Strip Circuit', city:'Las Vegas', laps:50, length:'6.201 km' },
+  23: { circuit:'Lusail International Circuit', city:'Lusail', laps:57, length:'5.419 km' },
+  24: { circuit:'Yas Marina Circuit', city:'Abu Dhabi', laps:58, length:'5.281 km' },
+};
 // ─── TABS ───────────────────────────────────────────────────────────────────
 function showStandings(type, btn) {
   document.getElementById('standings-drivers').style.display = type === 'drivers' ? 'flex' : 'none';
   document.getElementById('standings-constructors').style.display = type === 'constructors' ? 'flex' : 'none';
   document.getElementById('standings-drivers').style.flexDirection = 'column';
   document.getElementById('standings-constructors').style.flexDirection = 'column';
-  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.standings-tabs .s-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 }
 
@@ -558,6 +677,30 @@ function driverFlag(nat) {
   return map[nat] || '🏁';
 }
 
+// ─── ICS EXPORT ────────────────────────────────────────────────────────────
+function exportICS() {
+  let ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//F1 2026//CN\r\nCALSCALE:GREGORIAN\r\n';
+  races.forEach(rc => {
+    if (rc.cancelled) return;
+    const start = rc.date.replace(/-/g, '');
+    const endD = new Date(rc.end);
+    endD.setDate(endD.getDate() + 1);
+    const end = endD.toISOString().slice(0,10).replace(/-/g, '');
+    ics += `BEGIN:VEVENT\r\nDTSTART;VALUE=DATE:${start}\r\nDTEND;VALUE=DATE:${end}\r\n`;
+    ics += `SUMMARY:F1 R${rc.r} ${rc.name}${rc.sprint ? ' (冲刺周末)' : ''}\r\n`;
+    const ci = circuitInfo[rc.r];
+    if (ci) ics += `LOCATION:${ci.circuit}, ${ci.city}\r\n`;
+    ics += `END:VEVENT\r\n`;
+  });
+  ics += 'END:VCALENDAR\r\n';
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'F1-2026-Calendar.ics';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 // ─── RACE DETAIL ───────────────────────────────────────────────────────────
 const detailCache = {};
 
@@ -610,57 +753,241 @@ async function loadRaceDetail(rc, el) {
 function renderDetail(data, rc, el) {
   let html = '';
 
+  // Circuit info
+  const ci = circuitInfo[rc.r];
+  if (ci) {
+    html += `<div class="circuit-info">
+      <span>${ci.circuit}</span><span>${ci.city}</span><span>${ci.laps} 圈</span><span>${ci.length}</span>
+    </div>`;
+  }
+
   if (data.qualifying) {
-    html += `<div class="detail-section"><div class="detail-label">排位赛</div>`;
-    html += `<table class="result-table"><tr><th>P</th><th>车手</th><th>车队</th><th>Q1</th><th>Q2</th><th>Q3</th></tr>`;
-    data.qualifying.slice(0, 10).forEach(q => {
-      const pos = parseInt(q.position);
-      const cls = pos <= 3 ? `pos-${pos}` : '';
+    html += buildResultTable('排位赛', data.qualifying, ['P','车手','车队','Q1','Q2','Q3'], q => {
       const color = teamColor(q.Constructor?.name);
-      html += `<tr class="${cls}"><td>${q.position}</td><td>${q.Driver.code}</td>
+      return `<td>${q.position}</td><td>${q.Driver.code}</td>
         <td><span class="team-dot" style="background:${color}"></span>${q.Constructor?.name||''}</td>
-        <td>${q.Q1||'-'}</td><td>${q.Q2||'-'}</td><td>${q.Q3||'-'}</td></tr>`;
+        <td>${q.Q1||'-'}</td><td>${q.Q2||'-'}</td><td>${q.Q3||'-'}</td>`;
     });
-    html += `</table></div>`;
   }
 
   if (data.sprint) {
-    html += `<div class="detail-section"><div class="detail-label">冲刺赛</div>`;
-    html += `<table class="result-table"><tr><th>P</th><th>车手</th><th>车队</th><th>成绩/状态</th><th>积分</th></tr>`;
-    data.sprint.slice(0, 10).forEach(s => {
-      const pos = parseInt(s.position);
-      const cls = pos <= 3 ? `pos-${pos}` : '';
+    html += buildResultTable('冲刺赛', data.sprint, ['P','车手','车队','成绩/状态','积分'], s => {
       const color = teamColor(s.Constructor?.name);
       const time = s.Time?.time || s.status || '-';
-      html += `<tr class="${cls}"><td>${s.position}</td><td>${s.Driver.code}</td>
+      return `<td>${s.position}</td><td>${s.Driver.code}</td>
         <td><span class="team-dot" style="background:${color}"></span>${s.Constructor?.name||''}</td>
-        <td>${time}</td><td>${s.points}</td></tr>`;
+        <td>${time}</td><td>${s.points}</td>`;
     });
-    html += `</table></div>`;
   }
 
   if (data.race) {
-    html += `<div class="detail-section"><div class="detail-label">正赛</div>`;
-    html += `<table class="result-table"><tr><th>P</th><th>车手</th><th>车队</th><th>成绩/状态</th><th>积分</th></tr>`;
-    data.race.slice(0, 10).forEach(r => {
-      const pos = parseInt(r.position);
-      const cls = pos <= 3 ? `pos-${pos}` : '';
+    html += buildResultTable('正赛', data.race, ['P','车手','车队','成绩/状态','积分'], r => {
       const color = teamColor(r.Constructor?.name);
       const time = r.Time?.time || r.status || '-';
-      html += `<tr class="${cls}"><td>${r.position}</td><td>${r.Driver.code}</td>
+      return `<td>${r.position}</td><td>${r.Driver.code}</td>
         <td><span class="team-dot" style="background:${color}"></span>${r.Constructor?.name||''}</td>
-        <td>${time}</td><td>${r.points}</td></tr>`;
+        <td>${time}</td><td>${r.points}</td>`;
     });
-    html += `</table></div>`;
   }
 
   if (!html) html = '<div class="detail-loading">暂无成绩数据</div>';
   el.innerHTML = html;
+
+  // Wire up show-more buttons
+  el.querySelectorAll('.show-more-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const table = btn.previousElementSibling;
+      table.querySelectorAll('tr.hidden-row').forEach(tr => tr.style.display = '');
+      btn.remove();
+    });
+  });
+}
+
+function buildResultTable(label, items, headers, rowFn) {
+  let html = `<div class="detail-section"><div class="detail-label">${label}</div>`;
+  html += `<table class="result-table"><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  items.forEach((item, i) => {
+    const pos = parseInt(item.position);
+    const cls = pos <= 3 ? `pos-${pos}` : '';
+    const hidden = i >= 10 ? ' hidden-row" style="display:none' : '';
+    html += `<tr class="${cls}${hidden}">${rowFn(item)}</tr>`;
+  });
+  html += `</table>`;
+  if (items.length > 10) {
+    html += `<button class="show-more-btn">查看全部 ${items.length} 名车手</button>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+// ─── POINTS TREND CHART (pure canvas) ──────────────────────────────────────
+let chartData = null;
+let chartMode = 'drivers';
+
+async function loadChartData() {
+  if (chartData) return chartData;
+  const BASE = 'https://api.jolpi.ca/ergast/f1/2026';
+  chartData = { drivers: {}, constructors: {}, rounds: [] };
+
+  // Find how many rounds have results
+  try {
+    const res = await fetch(`${BASE}/results.json?limit=1000`);
+    const json = await res.json();
+    const allRaces = json.MRData?.RaceTable?.Races || [];
+
+    const roundNums = [...new Set(allRaces.map(r => parseInt(r.round)))].sort((a,b) => a-b);
+    chartData.rounds = roundNums;
+
+    // For each round, accumulate points
+    const driverPts = {};
+    const consPts = {};
+
+    for (const race of allRaces) {
+      const rnd = parseInt(race.round);
+      for (const result of (race.Results || [])) {
+        const dName = result.Driver.code;
+        const cName = result.Constructor.name;
+        const pts = parseFloat(result.points) || 0;
+        const dTeam = cName;
+
+        if (!driverPts[dName]) driverPts[dName] = { pts: {}, team: dTeam };
+        driverPts[dName].pts[rnd] = (driverPts[dName].pts[rnd] || 0) + pts;
+
+        if (!consPts[cName]) consPts[cName] = {};
+        consPts[cName][rnd] = (consPts[cName][rnd] || 0) + pts;
+      }
+    }
+
+    // Also add sprint points
+    try {
+      const sRes = await fetch(`${BASE}/sprint.json?limit=1000`);
+      const sJson = await sRes.json();
+      const sRaces = sJson.MRData?.RaceTable?.Races || [];
+      for (const race of sRaces) {
+        const rnd = parseInt(race.round);
+        for (const result of (race.SprintResults || [])) {
+          const dName = result.Driver.code;
+          const cName = result.Constructor.name;
+          const pts = parseFloat(result.points) || 0;
+          if (driverPts[dName]) driverPts[dName].pts[rnd] = (driverPts[dName].pts[rnd] || 0) + pts;
+          if (consPts[cName]) consPts[cName][rnd] = (consPts[cName][rnd] || 0) + pts;
+        }
+      }
+    } catch(e) {}
+
+    // Convert to cumulative
+    for (const [name, data] of Object.entries(driverPts)) {
+      let cum = 0;
+      const series = [];
+      for (const rnd of roundNums) {
+        cum += (data.pts[rnd] || 0);
+        series.push(cum);
+      }
+      chartData.drivers[name] = { series, team: data.team, total: cum };
+    }
+    for (const [name, pts] of Object.entries(consPts)) {
+      let cum = 0;
+      const series = [];
+      for (const rnd of roundNums) {
+        cum += (pts[rnd] || 0);
+        series.push(cum);
+      }
+      chartData.constructors[name] = { series, total: cum };
+    }
+  } catch(e) {}
+
+  return chartData;
+}
+
+async function drawChart(mode, btn) {
+  if (btn) {
+    document.querySelectorAll('.chart-tabs .s-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  chartMode = mode;
+  const data = await loadChartData();
+  const canvas = document.getElementById('chart-canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+  const pad = { top: 10, right: 80, bottom: 30, left: 36 };
+
+  ctx.clearRect(0, 0, W, H);
+
+  const rounds = data.rounds;
+  if (!rounds.length) return;
+
+  let entries;
+  if (mode === 'drivers') {
+    entries = Object.entries(data.drivers)
+      .sort((a,b) => b[1].total - a[1].total)
+      .slice(0, 8)
+      .map(([name, d]) => ({ name, series: d.series, color: teamColor(d.team) }));
+  } else {
+    entries = Object.entries(data.constructors)
+      .sort((a,b) => b[1].total - a[1].total)
+      .map(([name, d]) => ({ name, series: d.series, color: teamColor(name) }));
+  }
+
+  const maxPts = Math.max(...entries.map(e => Math.max(...e.series)), 1);
+  const plotW = W - pad.left - pad.right;
+  const plotH = H - pad.top - pad.bottom;
+
+  // Grid
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const textColor = isDark ? '#666' : '#aaa';
+  ctx.strokeStyle = gridColor;
+  ctx.lineWidth = 1;
+  const gridLines = 5;
+  for (let i = 0; i <= gridLines; i++) {
+    const y = pad.top + plotH - (plotH * i / gridLines);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = textColor; ctx.font = '10px DM Sans'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxPts * i / gridLines), pad.left - 6, y + 3);
+  }
+
+  // X labels
+  ctx.textAlign = 'center';
+  rounds.forEach((rnd, i) => {
+    const x = pad.left + (plotW * i / (rounds.length - 1 || 1));
+    ctx.fillStyle = textColor; ctx.font = '10px DM Sans';
+    ctx.fillText('R' + rnd, x, H - pad.bottom + 16);
+  });
+
+  // Lines
+  entries.forEach(entry => {
+    ctx.strokeStyle = entry.color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    entry.series.forEach((pts, i) => {
+      const x = pad.left + (plotW * i / (rounds.length - 1 || 1));
+      const y = pad.top + plotH - (plotH * pts / maxPts);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // End dot + label
+    const lastPts = entry.series[entry.series.length - 1];
+    const lx = pad.left + plotW;
+    const ly = pad.top + plotH - (plotH * lastPts / maxPts);
+    ctx.beginPath(); ctx.arc(lx, ly, 3, 0, Math.PI * 2); ctx.fillStyle = entry.color; ctx.fill();
+    ctx.fillStyle = isDark ? '#ccc' : '#333'; ctx.font = '10px DM Sans'; ctx.textAlign = 'left';
+    ctx.fillText(entry.name, lx + 6, ly + 3);
+  });
 }
 
 // ─── INIT ───────────────────────────────────────────────────────────────────
 buildSchedule();
 loadStandings();
+drawChart('drivers');
+window.addEventListener('resize', () => drawChart(chartMode));
 </script>
 </body>
 </html>
