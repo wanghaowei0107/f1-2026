@@ -309,6 +309,16 @@
   }
   .circuit-info span { white-space: nowrap; }
 
+  /* Session schedule */
+  .session-schedule {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.75rem;
+  }
+  .session-item {
+    font-size: 0.7rem; padding: 4px 8px; border-radius: 2px;
+    background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .session-item strong { color: var(--text); font-weight: 500; }
+
   /* Chart */
   .chart-container {
     background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
@@ -734,6 +744,10 @@ async function loadRaceDetail(rc, el) {
       const races = d.MRData?.RaceTable?.Races;
       if (races?.[0]?.Results) data.race = races[0].Results;
     }).catch(()=>{}),
+    fetch(`https://api.jolpi.ca/ergast/f1/2026/${round}.json`).then(r=>r.json()).then(d => {
+      const race = d.MRData?.RaceTable?.Races?.[0];
+      if (race) data.schedule = race;
+    }).catch(()=>{}),
   ];
 
   if (rc.sprint) {
@@ -759,6 +773,31 @@ function renderDetail(data, rc, el) {
     html += `<div class="circuit-info">
       <span>${ci.circuit}</span><span>${ci.city}</span><span>${ci.laps} 圈</span><span>${ci.length}</span>
     </div>`;
+  }
+
+  // Session schedule
+  if (data.schedule) {
+    const s = data.schedule;
+    const fmtTime = (obj) => {
+      if (!obj) return null;
+      const d = new Date(obj.date + 'T' + obj.time);
+      return d.toLocaleString('zh-CN', { month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:false });
+    };
+    const sessions = [];
+    if (s.FirstPractice) sessions.push(['FP1', fmtTime(s.FirstPractice)]);
+    if (s.SecondPractice) sessions.push(['FP2', fmtTime(s.SecondPractice)]);
+    if (s.ThirdPractice) sessions.push(['FP3', fmtTime(s.ThirdPractice)]);
+    if (s.Sprint) sessions.push(['冲刺赛', fmtTime(s.Sprint)]);
+    if (s.SprintQualifying) sessions.push(['冲刺排位', fmtTime(s.SprintQualifying)]);
+    if (s.Qualifying) sessions.push(['排位赛', fmtTime(s.Qualifying)]);
+    sessions.push(['正赛', fmtTime({ date: s.date, time: s.time })]);
+    if (sessions.length) {
+      html += `<div class="session-schedule">`;
+      sessions.forEach(([name, time]) => {
+        if (time) html += `<div class="session-item"><strong>${name}</strong> ${time}</div>`;
+      });
+      html += `</div>`;
+    }
   }
 
   if (data.qualifying) {
