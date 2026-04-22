@@ -41,3 +41,37 @@
 .live-table td {
   padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
 }
+
+/* ─── 车手/车队详情面板 ─── */
+.driver-detail-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  padding: 1rem 14px;
+  margin-top: -5px;
+  margin-bottom: 4px;
+}
+.driver-detail-panel .detail-label {
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--red); font-weight: 500; margin-bottom: 0.5rem;
+}
+.driver-detail-tabs {
+  display: flex; gap: 6px; margin-bottom: 1rem;
+}
+.driver-mini-chart {
+  width: 100%; height: 160px;
+}
+.driver-season-table {
+  width: 100%; border-collapse: collapse; font-size: 0.8rem;
+}
+.driver-season-table th {
+  text-align: left; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--border);
+}
+.driver-season-table td {
+  padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.constructor-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
