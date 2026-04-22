@@ -1,0 +1,70 @@
+import { races } from './data.js';
+import { buildSchedule } from './schedule.js';
+import { loadStandings, showStandings } from './standings.js';
+import { drawChart, getChartMode } from './chart.js';
+import { toggleRaceDetail } from './race-detail.js';
+import { exportICS } from './ics.js';
+import { initWeather } from './weather.js';
+import { initLive } from './live.js';
+import { initDriverDetail } from './driver-detail.js';
+import { initCircuitObserver } from './circuit.js';
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+export let currentSeason = 2026;
+
+// ─── DARK MODE ─────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? '' : 'dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? '☀' : '☾';
+  localStorage.setItem('f1-theme', isDark ? 'light' : 'dark');
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('f1-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.querySelector('.theme-toggle').textContent = '☾';
+  }
+})();
+
+// ─── SEASON SWITCHING ──────────────────────────────────────────────────────
+function switchSeason(year) {
+  currentSeason = parseInt(year);
+  document.querySelector('.season-badge').textContent = currentSeason;
+  loadStandings(currentSeason, true);
+  drawChart(getChartMode(), currentSeason);
+}
+
+// ─── BIND GLOBAL EVENT HANDLERS ────────────────────────────────────────────
+// HTML onclick attributes need functions on window since modules don't create globals
+window.toggleTheme = toggleTheme;
+window.showStandings = function(type, btn) { showStandings(type, btn); };
+window.loadStandings = function(force) { loadStandings(currentSeason, force); };
+window.exportICS = exportICS;
+window.drawChart = function(mode, btn) {
+  // Update tab active state
+  if (btn) {
+    document.querySelectorAll('.chart-tabs .s-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  drawChart(mode, currentSeason);
+};
+window.switchSeason = switchSeason;
+
+// ─── INITIALIZE ────────────────────────────────────────────────────────────
+function onRaceClick(rc, rowEl) {
+  toggleRaceDetail(rc, rowEl, currentSeason);
+}
+
+buildSchedule(races, onRaceClick);
+loadStandings(currentSeason);
+drawChart('drivers', currentSeason);
+window.addEventListener('resize', () => drawChart(getChartMode(), currentSeason));
+
+// Placeholder inits for future features
+initWeather();
+initLive();
+initDriverDetail();
+initCircuitObserver();
