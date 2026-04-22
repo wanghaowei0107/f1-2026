@@ -30,9 +30,15 @@ function toggleTheme() {
 })();
 
 // ─── SEASON SWITCHING ──────────────────────────────────────────────────────
-function switchSeason(year) {
+async function switchSeason(year) {
   currentSeason = parseInt(year);
   document.querySelector('.season-badge').textContent = currentSeason;
+  if (currentSeason === 2026) {
+    buildSchedule(races, onRaceClick);
+  } else {
+    const { loadHistorySeason } = await import('./history.js');
+    await loadHistorySeason(currentSeason);
+  }
   loadStandings(currentSeason, true);
   drawChart(getChartMode(), currentSeason);
 }
