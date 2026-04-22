@@ -75,3 +75,39 @@
 .constructor-compare {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
 }
+
+/* ─── 赛道可视化 ─── */
+.circuit-svg-container {
+  width: 100%; height: 180px; margin-bottom: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.circuit-svg-container svg { max-width: 100%; max-height: 100%; }
+.circuit-svg-container .no-circuit { font-size: 0.75rem; color: var(--muted); }
+
+/* ─── 天气 ─── */
+.weather-inline {
+  font-size: 0.75rem; white-space: nowrap; color: var(--muted);
+}
+.weather-detail-container { margin-bottom: 0.75rem; }
+.weather-detail-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.weather-day {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 8px 12px; text-align: center; min-width: 80px;
+}
+.weather-day-label {
+  font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.weather-day-icon { font-size: 1.4rem; margin-bottom: 2px; }
+.weather-day-temp { font-size: 0.75rem; }
+.weather-day-detail { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+/* ─── 赛季选择器 ─── */
+.season-select {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 2px;
+  padding: 4px 8px; cursor: pointer;
+}
+.season-select:hover { border-color: var(--red); }
