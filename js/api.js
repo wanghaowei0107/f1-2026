@@ -192,11 +192,11 @@ export async function getLocationData(sessionKey, driverNumber) {
 
 // ─── Open-Meteo API ────────────────────────────────────────────────────────
 
-export async function getWeatherForecast(lat, lng, dateStart, dateEnd) {
-  const key = cacheKey('weather', lat, lng, dateStart, dateEnd);
+export async function getWeatherForecast(lat, lng) {
+  const key = cacheKey('weather', lat, lng);
   const cached = getCached(key, CACHE_TTL_METEO);
   if (cached) return cached;
-  const url = `${METEO_BASE}?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&start_date=${dateStart}&end_date=${dateEnd}&timezone=auto`;
+  const url = `${METEO_BASE}?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max&timezone=auto&forecast_days=14`;
   const json = await fetchJSON(url);
   setCache(key, json);
   return json;

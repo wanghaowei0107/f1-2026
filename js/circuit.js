@@ -36,16 +36,16 @@ export function initCircuitObserver() {
   const observer = new MutationObserver(mutations => {
     for (const m of mutations) {
       for (const node of m.addedNodes) {
-        if (node.nodeType === 1 && node.classList?.contains('race-detail')) {
-          const svgContainer = node.querySelector('[id^="circuit-svg-r"]');
-          if (svgContainer) {
-            const round = parseInt(svgContainer.id.replace('circuit-svg-r', ''));
-            renderCircuitSvg(round);
-          }
+        if (node.nodeType !== 1) continue;
+        // Check if the added node itself has the SVG container
+        const svgContainer = node.querySelector?.('[id^="circuit-svg-r"]');
+        if (svgContainer) {
+          const round = parseInt(svgContainer.id.replace('circuit-svg-r', ''));
+          renderCircuitSvg(round);
         }
       }
     }
   });
   const scheduleList = document.getElementById('schedule-list');
-  if (scheduleList) observer.observe(scheduleList, { childList: true });
+  if (scheduleList) observer.observe(scheduleList, { childList: true, subtree: true });
 }

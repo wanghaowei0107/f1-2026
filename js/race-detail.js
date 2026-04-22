@@ -1,5 +1,6 @@
 import { circuitInfo, teamColor, posClass } from './data.js';
 import { getQualifyingResults, getSprintResults, getRaceResults, getRaceSchedule } from './api.js';
+import { renderCircuitSvg } from './circuit.js';
 
 const detailCache = {};
 
@@ -53,7 +54,7 @@ function renderDetail(data, rc, el) {
   }
 
   // Placeholder for circuit SVG visualization
-  html += `<div id="circuit-svg-r${rc.r}"></div>`;
+  html += `<div id="circuit-svg-r${rc.r}" class="circuit-svg-container"></div>`;
 
   // Session schedule
   if (data.schedule) {
@@ -116,6 +117,9 @@ function renderDetail(data, rc, el) {
     html += '<div class="detail-loading">暂无成绩数据</div>';
   }
   el.innerHTML = html;
+
+  // Render circuit SVG
+  renderCircuitSvg(rc.r);
 
   // Wire up show-more buttons
   el.querySelectorAll('.show-more-btn').forEach(btn => {

@@ -58,6 +58,10 @@ window.drawChart = function(mode, btn) {
   drawChart(mode, currentSeason);
 };
 window.switchSeason = switchSeason;
+window.toggleCompare = async function() {
+  const { toggleCompare } = await import('./history.js');
+  toggleCompare();
+};
 
 // ─── INITIALIZE ────────────────────────────────────────────────────────────
 function onRaceClick(rc, rowEl) {
