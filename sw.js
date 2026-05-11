@@ -14,6 +14,7 @@ const STATIC_ASSETS = [
   '/js/driver-detail.js',
   '/js/live.js',
   '/js/circuit.js',
+  '/js/circuit-data.js',
   '/js/history.js',
   '/js/weather.js',
   '/js/ics.js',
