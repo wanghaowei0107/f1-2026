@@ -43,6 +43,148 @@
   padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
+/* ─── 车手/车队对比 ─── */
+#comparison-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: 8px;
+  box-shadow: var(--shadow-md);
+}
+.cmp-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;
+}
+.cmp-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em;
+}
+.cmp-close-btn {
+  font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 500;
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  padding: 4px 10px; border-radius: 2px; cursor: pointer;
+  transition: all 0.15s;
+}
+.cmp-close-btn:hover { border-color: var(--red); color: var(--text); }
+.cmp-selects {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.cmp-dropdown {
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 6px 10px; cursor: pointer; flex: 1; min-width: 120px;
+}
+.cmp-dropdown:focus { border-color: var(--red); outline: none; }
+.cmp-vs {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.08em; color: var(--red); flex-shrink: 0;
+}
+.cmp-go-btn {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--red); color: #fff; border: 1px solid var(--red);
+  padding: 6px 14px; border-radius: 2px; cursor: pointer;
+  transition: all 0.15s; flex-shrink: 0;
+}
+.cmp-go-btn:hover { background: var(--red-dark); }
+
+.cmp-card-container { margin-top: 0.5rem; }
+.cmp-drivers-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;
+}
+.cmp-driver-head {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: var(--space-2); border-left: 3px solid var(--border);
+  background: var(--surface2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.cmp-driver-color {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.cmp-driver-name {
+  font-size: 0.9rem; font-weight: 500;
+}
+.cmp-driver-team {
+  font-size: 0.72rem; color: var(--muted);
+}
+.cmp-stats-rows { margin-bottom: 1rem; }
+.cmp-stat-row {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.cmp-stat-row:last-child { border-bottom: none; }
+.cmp-stat-val {
+  font-size: 0.9rem; font-weight: 400; text-align: center;
+}
+.cmp-stat-val:first-child { text-align: right; }
+.cmp-stat-val:last-child { text-align: left; }
+.cmp-stat-val.cmp-winner {
+  font-weight: 500; color: var(--red);
+}
+.cmp-stat-label {
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; padding: 0 12px; text-align: center; min-width: 80px;
+}
+.cmp-race-table {
+  width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 0.5rem;
+}
+.cmp-race-table th {
+  text-align: left; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--border);
+}
+.cmp-race-table td {
+  padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.cmp-race-table tr:last-child td { border-bottom: none; }
+
+@media (max-width: 560px) {
+  .cmp-selects { flex-direction: column; align-items: stretch; }
+  .cmp-vs { text-align: center; }
+  .cmp-drivers-header { grid-template-columns: 1fr; }
+  .cmp-stat-row { grid-template-columns: 1fr auto 1fr; }
+  .cmp-race-table { font-size: 0.7rem; }
+}
+
+/* ─── 车手档案面板 ─── */
+.driver-profile-panel { }
+.profile-header {
+  padding: var(--space-2); margin-bottom: 1rem;
+  background: var(--surface2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.profile-name-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.profile-flag { font-size: 1.2rem; }
+.profile-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+  letter-spacing: 0.04em; line-height: 1;
+}
+.profile-team {
+  font-size: 0.8rem; font-weight: 500;
+}
+.profile-meta {
+  font-size: 0.72rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em;
+}
+.profile-stats-grid {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0.75rem;
+}
+.profile-stat {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 14px; text-align: center;
+  min-width: 64px; flex: 1;
+}
+.profile-stat-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  letter-spacing: 0.04em; line-height: 1; color: var(--text);
+}
+.profile-stat-label {
+  font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-top: 2px;
+}
+@media (max-width: 560px) {
+  .profile-stats-grid { gap: 6px; }
+  .profile-stat { min-width: 50px; padding: 8px 10px; }
+  .profile-stat-num { font-size: 1.2rem; }
+}
+
 /* ─── 车手/车队详情面板 ─── */
 .driver-detail-panel {
   background: var(--surface);
@@ -151,4 +293,155 @@
 .skeleton-block.status {
   width: 50px;
   height: 20px;
+}
+
+/* ─── 赛事详情操作按钮 ─── */
+.detail-actions {
+  display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap;
+}
+.detail-action-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--text);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 6px 12px;
+  cursor: pointer; transition: all 0.15s;
+}
+.detail-action-btn:hover {
+  border-color: var(--red); color: var(--red);
+}
+.detail-action-btn .action-icon {
+  font-size: 0.85rem;
+}
+
+/* ─── 比赛回放 ─── */
+.replay-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow-sm);
+}
+.replay-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+}
+.replay-header .detail-label {
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--red); font-weight: 500;
+}
+.replay-session-name {
+  font-size: 0.8rem; color: var(--muted);
+}
+.replay-canvas {
+  width: 100%; height: 280px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
+.replay-controls {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+}
+.replay-play-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  background: var(--red); color: #fff;
+  border: none; border-radius: 50%;
+  cursor: pointer; transition: background 0.15s;
+  flex-shrink: 0;
+}
+.replay-play-btn:hover { background: var(--red-dark); }
+.replay-slider {
+  flex: 1;
+  -webkit-appearance: none; appearance: none;
+  height: 4px; background: var(--border);
+  border-radius: 2px; outline: none;
+  cursor: pointer;
+}
+.replay-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px;
+  background: var(--red); border-radius: 50%;
+  cursor: pointer;
+}
+.replay-slider::-moz-range-thumb {
+  width: 14px; height: 14px;
+  background: var(--red); border-radius: 50%;
+  border: none; cursor: pointer;
+}
+.replay-lap-label {
+  font-size: 0.72rem; color: var(--muted);
+  min-width: 80px; text-align: right;
+  white-space: nowrap;
+}
+.replay-drivers {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.replay-driver-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.04em;
+  background: var(--surface2); color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 2px; padding: 3px 8px;
+  cursor: pointer; transition: all 0.15s;
+}
+.replay-driver-btn:hover {
+  background: var(--surface);
+}
+.replay-driver-btn.active {
+  background: var(--red); color: #fff;
+  border-color: var(--red);
+}
+
+/* ─── 车载摄像头 ─── */
+.onboard-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow-sm);
+}
+.onboard-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+}
+.onboard-header .detail-label {
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--red); font-weight: 500;
+}
+.onboard-status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; color: var(--red); font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.onboard-video {
+  position: relative;
+  width: 100%; padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.onboard-video iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.onboard-note {
+  font-size: 0.72rem; color: var(--muted);
+  text-align: center;
+}
+.onboard-inline {
+  margin-top: 0.75rem;
+}
+
+/* ─── 回放 + 车载响应式 ─── */
+@media (max-width: 560px) {
+  .replay-canvas { height: 200px; }
+  .replay-controls { flex-wrap: wrap; }
+  .replay-lap-label { width: 100%; text-align: center; }
+  .detail-actions { flex-direction: column; }
+  .detail-action-btn { width: 100%; justify-content: center; }
 }
