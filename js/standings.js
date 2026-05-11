@@ -3,6 +3,23 @@ import { getDriverStandings, getConstructorStandings } from './api.js';
 
 let standingsLoaded = false;
 
+function renderStandingsSkeleton(container, count) {
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const row = document.createElement('div');
+    row.className = 'skeleton-row';
+    row.style.gridTemplateColumns = '28px 24px 1fr 130px 44px';
+    row.innerHTML = `
+      <div class="skeleton skeleton-block" style="width:28px;text-align:center;">${i+1}</div>
+      <div class="skeleton skeleton-block flag"></div>
+      <div class="skeleton skeleton-block name"></div>
+      <div class="skeleton skeleton-block" style="width:130px;height:4px;"></div>
+      <div class="skeleton skeleton-block" style="width:44px;"></div>
+    `;
+    container.appendChild(row);
+  }
+}
+
 export function showStandings(type, btn) {
   document.getElementById('standings-drivers').style.display = type === 'drivers' ? 'flex' : 'none';
   document.getElementById('standings-constructors').style.display = type === 'constructors' ? 'flex' : 'none';
@@ -70,6 +87,17 @@ export async function loadStandings(year, force) {
   standingsLoaded = true;
 
   const yr = year || 2026;
+
+  // Show skeleton while loading
+  const driversEl = document.getElementById('standings-drivers');
+  const constructorsEl = document.getElementById('standings-constructors');
+
+  if (!driversEl.children.length || driversEl.querySelector('.loading')) {
+    renderStandingsSkeleton(driversEl, 10);
+  }
+  if (!constructorsEl.children.length || constructorsEl.querySelector('.loading')) {
+    renderStandingsSkeleton(constructorsEl, 10);
+  }
 
   // Driver standings
   try {
