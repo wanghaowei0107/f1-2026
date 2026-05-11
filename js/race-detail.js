@@ -1,5 +1,7 @@
 import { circuitInfo, teamColor, posClass } from './data.js';
 import { getQualifyingResults, getSprintResults, getRaceResults, getRaceSchedule } from './api.js';
+import { showReplay } from './race-replay.js';
+import { showOnboard } from './onboard.js';
 
 const detailCache = {};
 
@@ -20,7 +22,7 @@ async function loadRaceDetail(rc, el, year) {
   const yr = year || 2026;
   const round = rc.r;
   const key = `r${round}_${yr}`;
-  if (detailCache[key]) { renderDetail(detailCache[key], rc, el); return; }
+  if (detailCache[key]) { renderDetail(detailCache[key], rc, el, yr); return; }
 
   const data = {};
 
@@ -38,10 +40,11 @@ async function loadRaceDetail(rc, el, year) {
 
   await Promise.all(fetches);
   detailCache[key] = data;
-  renderDetail(data, rc, el);
+  renderDetail(data, rc, el, yr);
 }
 
-function renderDetail(data, rc, el) {
+function renderDetail(data, rc, el, year) {
+  const yr = year || 2026;
   let html = '';
 
   // Circuit info
@@ -76,6 +79,17 @@ function renderDetail(data, rc, el) {
       html += `</div>`;
     }
   }
+
+  // Action buttons (Replay + Onboard)
+  html += `<div class="detail-actions">
+    <button class="detail-action-btn replay-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openReplay(${rc.r}, ${yr})">
+      <span class="action-icon">📊</span> 位置回放
+    </button>
+    <button class="detail-action-btn onboard-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openOnboard(this, '${rc.name}')">
+      <span class="action-icon">🎥</span> 车载摄像头
+    </button>
+  </div>`;
+  html += `<div id="replay-detail-r${rc.r}"></div>`;
 
   // Placeholder for weather detail
   html += `<div id="weather-detail-r${rc.r}"></div>`;
