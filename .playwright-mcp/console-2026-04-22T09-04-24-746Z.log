@@ -1,0 +1,2 @@
+[    1088ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8765/favicon.ico:0
+[    1989ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://api.open-meteo.com/v1/forecast?latitude=25.9581&longitude=-80.2389&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&start_date=undefined&end_date=undefined&timezone=auto:0

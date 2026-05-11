@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]: F1 赛季
+    - generic [ref=e5]: "2026"
+    - generic [ref=e6]:
+      - combobox [ref=e7] [cursor=pointer]:
+        - option "2026" [selected]
+        - option "2025"
+        - option "2024"
+        - option "2023"
+      - generic [ref=e8]: 积分更新至第3站 · 2026/4/22
+      - button "切换深色模式" [ref=e9] [cursor=pointer]: ☀
+  - main [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: 下一站
+      - generic [ref=e13]: 迈阿密大奖赛
+      - generic [ref=e14]: 5月1日 — 3日 · 🇺🇸
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - generic [ref=e17]: "8"
+          - generic [ref=e18]: 天
+        - generic [ref=e19]:
+          - generic [ref=e20]: "20"
+          - generic [ref=e21]: 时
+        - generic [ref=e22]:
+          - generic [ref=e23]: "45"
+          - generic [ref=e24]: 分
+        - generic [ref=e25]:
+          - generic [ref=e26]: "09"
+          - generic [ref=e27]: 秒
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]: 积分榜
+        - generic [ref=e31]:
+          - button "车手" [ref=e32] [cursor=pointer]
+          - button "车队" [ref=e33] [cursor=pointer]
+          - button "↻ 刷新" [ref=e34] [cursor=pointer]
+        - generic [ref=e35]:
+          - generic [ref=e36]
+          - generic [ref=e45]
+          - generic [ref=e54]
+          - generic [ref=e63]
+          - generic [ref=e72]
+          - generic [ref=e81]
+          - generic [ref=e90]
+          - generic [ref=e99]
+          - generic [ref=e108]
+          - generic [ref=e117]
+          - generic [ref=e126]
+          - generic [ref=e135]
+          - generic [ref=e144]
+          - generic [ref=e153]
+          - generic [ref=e162]
+          - generic [ref=e171]
+          - generic [ref=e180]
+          - generic [ref=e188]
+          - generic [ref=e196]
+          - generic [ref=e204]
+          - generic [ref=e212]
+          - generic [ref=e220]
+      - generic [ref=e228]:
+        - generic [ref=e229]:
+          - generic [ref=e230]: 赛程
+          - button "导出日历 .ics" [ref=e231] [cursor=pointer]
+        - generic [ref=e232]:
+          - generic [ref=e233] [cursor=pointer]
+          - generic [ref=e422]
+          - generic [ref=e241] [cursor=pointer]
+          - generic [ref=e250] [cursor=pointer]
+          - generic [ref=e258]
+          - generic [ref=e266]
+          - generic [ref=e274]
+          - generic [ref=e283]
+          - generic [ref=e291]
+          - generic [ref=e298]
+          - generic [ref=e305]
+          - generic [ref=e312]
+          - generic [ref=e320]
+          - generic [ref=e327]
+          - generic [ref=e334]
+          - generic [ref=e342]
+          - generic [ref=e349]
+          - generic [ref=e356]
+          - generic [ref=e363]
+          - generic [ref=e371]
+          - generic [ref=e378]
+          - generic [ref=e385]
+          - generic [ref=e392]
+          - generic [ref=e399]
+          - generic [ref=e406]
+    - generic [ref=e414]:
+      - generic [ref=e415]: 积分趋势
+      - generic [ref=e416]:
+        - button "车手 Top 8" [ref=e417] [cursor=pointer]
+        - button "车队" [ref=e418] [cursor=pointer]
+        - button "对比" [ref=e419] [cursor=pointer]

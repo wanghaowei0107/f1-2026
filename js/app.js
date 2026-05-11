@@ -7,7 +7,6 @@ import { exportICS } from './ics.js';
 import { initWeather } from './weather.js';
 import { initLive } from './live.js';
 import { initDriverDetail } from './driver-detail.js';
-import { initCircuitObserver } from './circuit.js';
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 export let currentSeason = 2026;
@@ -77,7 +76,6 @@ window.addEventListener('resize', () => drawChart(getChartMode(), currentSeason)
 initWeather();
 initLive();
 initDriverDetail();
-initCircuitObserver();
 
 // Dynamic stagger animation for items beyond 10
 function applyStaggerAnimation() {
