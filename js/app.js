@@ -90,3 +90,29 @@ function applyStaggerAnimation() {
 
 // Apply stagger after building schedule and loading standings
 setTimeout(applyStaggerAnimation, 100);
+
+// ─── SERVICE WORKER ────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered:', registration.scope);
+      })
+      .catch((error) => {
+        console.log('SW registration failed:', error);
+      });
+  });
+}
+
+// ─── OFFLINE DETECTION ─────────────────────────────────────────────────────
+window.addEventListener('online', () => {
+  const banner = document.getElementById('offline-banner');
+  if (banner) banner.style.display = 'none';
+  loadStandings(currentSeason, true);
+  drawChart(getChartMode(), currentSeason);
+});
+
+window.addEventListener('offline', () => {
+  const banner = document.getElementById('offline-banner');
+  if (banner) banner.style.display = 'block';
+});
