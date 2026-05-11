@@ -180,6 +180,16 @@ export async function getLiveIntervals(sessionKey) {
   return json || [];
 }
 
+export async function getSessions(year, sessionType) {
+  const key = cacheKey('sessions', year, sessionType);
+  const cached = getCached(key, CACHE_TTL_JOLPICA);
+  if (cached) return cached;
+  const json = await fetchJSON(`${OPENF1_BASE}/sessions?year=${year}&session_type=${sessionType}`);
+  const data = json || [];
+  setCache(key, data);
+  return data;
+}
+
 export async function getLocationData(sessionKey, driverNumber) {
   const lsKey = `openf1:location:${sessionKey}:${driverNumber}`;
   const cached = getLSCache(lsKey);
