@@ -3,12 +3,13 @@ import { getDriverStandings, getConstructorStandings } from './api.js';
 
 let standingsLoaded = false;
 
-function renderStandingsSkeleton(container, count) {
+function renderStandingsSkeleton(container, count, type) {
   container.innerHTML = '';
+  const cols = type === 'constructors' ? '28px 12px 1fr 130px 44px' : '28px 24px 1fr 130px 44px';
   for (let i = 0; i < count; i++) {
     const row = document.createElement('div');
     row.className = 'skeleton-row';
-    row.style.gridTemplateColumns = '28px 24px 1fr 130px 44px';
+    row.style.gridTemplateColumns = cols;
     row.innerHTML = `
       <div class="skeleton skeleton-block" style="width:28px;text-align:center;">${i+1}</div>
       <div class="skeleton skeleton-block flag"></div>
@@ -93,10 +94,10 @@ export async function loadStandings(year, force) {
   const constructorsEl = document.getElementById('standings-constructors');
 
   if (!driversEl.children.length || driversEl.querySelector('.loading')) {
-    renderStandingsSkeleton(driversEl, 10);
+    renderStandingsSkeleton(driversEl, 10, 'drivers');
   }
   if (!constructorsEl.children.length || constructorsEl.querySelector('.loading')) {
-    renderStandingsSkeleton(constructorsEl, 10);
+    renderStandingsSkeleton(constructorsEl, 10, 'constructors');
   }
 
   // Driver standings

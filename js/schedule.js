@@ -19,32 +19,11 @@ function startCountdown(target) {
   countdownInterval = setInterval(tick, 1000);
 }
 
-function renderSkeletons(container, count) {
-  container.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    const row = document.createElement('div');
-    row.className = 'skeleton-row';
-    row.innerHTML = `
-      <div class="skeleton skeleton-block round"></div>
-      <div class="skeleton skeleton-block flag"></div>
-      <div class="skeleton skeleton-block name"></div>
-      <div class="skeleton skeleton-block date"></div>
-      <div class="skeleton skeleton-block status"></div>
-    `;
-    container.appendChild(row);
-  }
-}
-
 export function buildSchedule(raceList, onRaceClick) {
   const list = raceList || races;
   const today = new Date().toISOString().slice(0, 10);
   let nextSet = false;
   const el = document.getElementById('schedule-list');
-
-  // Show skeleton while loading
-  if (!el.children.length || el.querySelector('.loading')) {
-    renderSkeletons(el, 8);
-  }
 
   el.innerHTML = '';
 
