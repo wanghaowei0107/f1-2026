@@ -404,3 +404,31 @@
     .race-row { grid-template-columns: 28px 24px 1fr auto; }
     .sprint-pill { display: none; }
   }
+
+  /* Stagger fade-in animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .race-row, .driver-row, .cons-row {
+    animation: fadeInUp 0.3s ease-out forwards;
+    opacity: 0;
+  }
+
+  .race-row:nth-child(1), .driver-row:nth-child(1), .cons-row:nth-child(1) { animation-delay: 0.05s; }
+  .race-row:nth-child(2), .driver-row:nth-child(2), .cons-row:nth-child(2) { animation-delay: 0.1s; }
+  .race-row:nth-child(3), .driver-row:nth-child(3), .cons-row:nth-child(3) { animation-delay: 0.15s; }
+  .race-row:nth-child(4), .driver-row:nth-child(4), .cons-row:nth-child(4) { animation-delay: 0.2s; }
+  .race-row:nth-child(5), .driver-row:nth-child(5), .cons-row:nth-child(5) { animation-delay: 0.25s; }
+  .race-row:nth-child(6), .driver-row:nth-child(6), .cons-row:nth-child(6) { animation-delay: 0.3s; }
+  .race-row:nth-child(7), .driver-row:nth-child(7), .cons-row:nth-child(7) { animation-delay: 0.35s; }
+  .race-row:nth-child(8), .driver-row:nth-child(8), .cons-row:nth-child(8) { animation-delay: 0.4s; }
+  .race-row:nth-child(9), .driver-row:nth-child(9), .cons-row:nth-child(9) { animation-delay: 0.45s; }
+  .race-row:nth-child(10), .driver-row:nth-child(10), .cons-row:nth-child(10) { animation-delay: 0.5s; }

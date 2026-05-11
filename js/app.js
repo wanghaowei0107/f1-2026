@@ -78,3 +78,15 @@ initWeather();
 initLive();
 initDriverDetail();
 initCircuitObserver();
+
+// Dynamic stagger animation for items beyond 10
+function applyStaggerAnimation() {
+  document.querySelectorAll('.race-row, .driver-row, .cons-row').forEach((row, i) => {
+    if (i >= 10) {
+      row.style.animationDelay = `${0.05 * (i + 1)}s`;
+    }
+  });
+}
+
+// Apply stagger after building schedule and loading standings
+setTimeout(applyStaggerAnimation, 100);
