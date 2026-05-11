@@ -1,0 +1,27 @@
+{
+  "name": "F1 2026 赛季中心",
+  "short_name": "F1 2026",
+  "description": "F1 2026 赛季信息中心 - 积分榜、赛程、天气、实时数据",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#E8002D",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "entertainment"],
+  "lang": "zh-CN",
+  "dir": "ltr"
+}
