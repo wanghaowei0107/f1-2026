@@ -5,9 +5,10 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-left: 3px solid var(--red);
-  border-radius: 4px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-md);
 }
 .live-header {
   display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
@@ -47,8 +48,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-top: none;
-  border-radius: 0 0 4px 4px;
-  padding: 1rem 14px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  padding: var(--space-2) var(--space-3);
   margin-top: -5px;
   margin-bottom: 4px;
 }
@@ -91,8 +92,9 @@
 .weather-detail-container { margin-bottom: 0.75rem; }
 .weather-detail-grid { display: flex; gap: 8px; flex-wrap: wrap; }
 .weather-day {
-  background: var(--surface2); border: 1px solid var(--border); border-radius: 4px;
-  padding: 8px 12px; text-align: center; min-width: 80px;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3); text-align: center; min-width: 80px;
+  box-shadow: var(--shadow-sm);
 }
 .weather-day-label {
   font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em;
