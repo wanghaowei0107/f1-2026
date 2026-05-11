@@ -2,14 +2,8 @@ import { teamColor } from './data.js';
 import * as api from './api.js';
 
 export function initDriverDetail() {
-  document.getElementById('standings-drivers').addEventListener('click', e => {
-    const row = e.target.closest('.driver-row');
-    if (!row) return;
-    const driverId = row.dataset.driverId;
-    if (!driverId) return;
-    toggleDriverPanel(driverId, row);
-  });
-
+  // Driver clicks are now handled by driver-profile.js
+  // Only handle constructor clicks here
   document.getElementById('standings-constructors').addEventListener('click', e => {
     const row = e.target.closest('.cons-row');
     if (!row) return;

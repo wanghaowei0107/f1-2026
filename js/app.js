@@ -7,6 +7,10 @@ import { exportICS } from './ics.js';
 import { initWeather } from './weather.js';
 import { initLive } from './live.js';
 import { initDriverDetail } from './driver-detail.js';
+import { initComparison, showComparison, runComparison, closeComparison } from './comparison.js';
+import { initDriverProfile } from './driver-profile.js';
+import { initReplay } from './race-replay.js';
+import { initOnboard } from './onboard.js';
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 export let currentSeason = 2026;
@@ -61,6 +65,9 @@ window.toggleCompare = async function() {
   const { toggleCompare } = await import('./history.js');
   toggleCompare();
 };
+window.showComparison = function(type) { showComparison(type); };
+window.runComparison = function() { runComparison(); };
+window.closeComparison = function() { closeComparison(); };
 
 // ─── INITIALIZE ────────────────────────────────────────────────────────────
 function onRaceClick(rc, rowEl) {
@@ -72,10 +79,38 @@ loadStandings(currentSeason);
 drawChart('drivers', currentSeason);
 window.addEventListener('resize', () => drawChart(getChartMode(), currentSeason));
 
-// Placeholder inits for future features
+// Initialize modules
 initWeather();
 initLive();
 initDriverDetail();
+initComparison();
+initDriverProfile();
+initReplay();
+initOnboard();
+
+// Replay + Onboard integration
+window._openReplay = async function(round, year) {
+  const container = document.getElementById(`replay-detail-r${round}`);
+  if (!container) return;
+  const { showReplay } = await import('./race-replay.js');
+  showReplay(year, round, container);
+};
+
+window._openOnboard = function(btn, meetingName) {
+  const detail = btn.closest('.race-detail');
+  if (!detail) return;
+  const { showOnboard } = window;
+  if (showOnboard) {
+    // Find or create onboard container
+    let onboardContainer = detail.querySelector('.onboard-inline');
+    if (!onboardContainer) {
+      onboardContainer = document.createElement('div');
+      onboardContainer.className = 'onboard-inline';
+      detail.appendChild(onboardContainer);
+    }
+    showOnboard(onboardContainer, meetingName);
+  }
+};
 
 // Dynamic stagger animation for items beyond 10
 function applyStaggerAnimation() {
