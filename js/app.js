@@ -11,6 +11,7 @@ import { initComparison, showComparison, runComparison, closeComparison } from '
 import { initDriverProfile } from './driver-profile.js';
 import { initReplay } from './race-replay.js';
 import { initOnboard } from './onboard.js';
+import { initCircuitObserver } from './circuit.js';
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 export let currentSeason = 2026;
@@ -87,6 +88,7 @@ initComparison();
 initDriverProfile();
 initReplay();
 initOnboard();
+initCircuitObserver();
 
 // Replay + Onboard integration
 window._openReplay = async function(round, year) {
