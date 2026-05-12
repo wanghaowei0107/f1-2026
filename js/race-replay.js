@@ -6,8 +6,10 @@ import { teamColor } from './data.js';
 
 export async function getRacePositions(sessionKey) {
   const positions = await api.getLivePositions(sessionKey);
+  if (!positions || !Array.isArray(positions)) return {};
   const byLap = {};
   for (const pos of positions) {
+    if (pos.lap == null || pos.driver_number == null) continue;
     if (!byLap[pos.lap]) byLap[pos.lap] = {};
     byLap[pos.lap][pos.driver_number] = pos.position;
   }
@@ -260,6 +262,7 @@ export class ReplayChart {
 export async function findSessionKey(year, round, sessionType) {
   // sessionType: 'Race', 'Qualifying', 'Sprint', etc.
   const sessions = await api.getSessions(year, sessionType);
+  if (!sessions || !Array.isArray(sessions) || sessions.length === 0) return null;
   // Match by round number (approximate by date order)
   const sorted = sessions.sort((a, b) => new Date(a.date_start) - new Date(b.date_start));
   return sorted[round - 1] || null;
@@ -297,7 +300,9 @@ export async function showReplay(year, round, containerEl) {
     // Build driver info from position data
     const drivers = {};
     for (const lap of laps) {
-      for (const [num, pos] of Object.entries(positions[lap])) {
+      const lapData = positions[lap];
+      if (!lapData) continue;
+      for (const [num, pos] of Object.entries(lapData)) {
         if (!drivers[num]) {
           drivers[num] = { code: num, team: '', color: '#888' };
         }

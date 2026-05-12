@@ -36,10 +36,15 @@ export async function renderCircuitSvg(round) {
     // Make SVG responsive
     const svgEl = container.querySelector('svg');
     if (svgEl) {
+      const w = svgEl.getAttribute('width');
+      const h = svgEl.getAttribute('height');
+      if (w && h && !svgEl.getAttribute('viewBox')) {
+        svgEl.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      }
       svgEl.removeAttribute('width');
       svgEl.removeAttribute('height');
-      svgEl.style.maxWidth = '100%';
-      svgEl.style.maxHeight = '180px';
+      svgEl.style.width = '100%';
+      svgEl.style.height = '100%';
     }
   } catch (e) {
     container.innerHTML = '<span class="no-circuit">赛道图加载失败</span>';
