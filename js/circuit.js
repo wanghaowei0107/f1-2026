@@ -21,13 +21,14 @@ export async function renderCircuitSvg(round) {
     }
 
     // Adjust SVG colors for current theme
+    // SVG has two layers: stroke:#fff (wide outline, 20px) and stroke:#000 (inner line, 5px)
     let svg = svgCache[round];
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (isDark) {
-      svg = svg.replace(/stroke:#fff/g, 'stroke:#555');
+      svg = svg.replace(/stroke:#fff/g, 'stroke:#444');
       svg = svg.replace(/stroke:#000/g, 'stroke:#ccc');
     } else {
-      svg = svg.replace(/stroke:#fff/g, 'stroke:#ddd');
+      svg = svg.replace(/stroke:#fff/g, 'stroke:#aaa');
       svg = svg.replace(/stroke:#000/g, 'stroke:#333');
     }
 
