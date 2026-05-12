@@ -14,7 +14,8 @@ export async function renderCircuitSvg(round) {
 
   try {
     if (!svgCache[round]) {
-      const response = await fetch(`circuits/${filename}`);
+      const base = window.location.pathname.replace(/\/[^\/]*$/, '/');
+      const response = await fetch(`${base}circuits/${filename}`);
       if (!response.ok) throw new Error('Not found');
       svgCache[round] = await response.text();
     }
