@@ -14,17 +14,20 @@ export async function renderCircuitSvg(round) {
 
   try {
     if (!svgCache[round]) {
-      const response = await fetch(`/circuits/${filename}`);
+      const response = await fetch(`circuits/${filename}`);
       if (!response.ok) throw new Error('Not found');
       svgCache[round] = await response.text();
     }
 
-    // Adjust SVG for dark mode
+    // Adjust SVG colors for current theme
     let svg = svgCache[round];
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (isDark) {
-      // Change white stroke to light gray for dark mode
       svg = svg.replace(/stroke:#fff/g, 'stroke:#555');
+      svg = svg.replace(/stroke:#000/g, 'stroke:#ccc');
+    } else {
+      svg = svg.replace(/stroke:#fff/g, 'stroke:#ddd');
+      svg = svg.replace(/stroke:#000/g, 'stroke:#333');
     }
 
     container.innerHTML = svg;
