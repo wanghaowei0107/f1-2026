@@ -25,18 +25,25 @@ async function loadRaceDetail(rc, el, year) {
   const key = `r${round}_${yr}`;
   if (detailCache[key]) { renderDetail(detailCache[key], rc, el, yr); return; }
 
-  const data = {};
+  const today = new Date().toISOString().slice(0, 10);
+  const isFuture = rc.end >= today;
+  const data = { isFuture };
 
   const fetches = [
-    getQualifyingResults(yr, round).then(d => { if (d) data.qualifying = d; }).catch(()=>{}),
-    getRaceResults(yr, round).then(d => { if (d) data.race = d; }).catch(()=>{}),
     getRaceSchedule(yr, round).then(d => { if (d) data.schedule = d; }).catch(()=>{}),
   ];
 
-  if (rc.sprint) {
+  // Only fetch results for past races
+  if (!isFuture) {
     fetches.push(
-      getSprintResults(yr, round).then(d => { if (d) data.sprint = d; }).catch(()=>{})
+      getQualifyingResults(yr, round).then(d => { if (d) data.qualifying = d; }).catch(()=>{}),
+      getRaceResults(yr, round).then(d => { if (d) data.race = d; }).catch(()=>{}),
     );
+    if (rc.sprint) {
+      fetches.push(
+        getSprintResults(yr, round).then(d => { if (d) data.sprint = d; }).catch(()=>{})
+      );
+    }
   }
 
   await Promise.all(fetches);
@@ -84,16 +91,18 @@ function renderDetail(data, rc, el, year) {
     }
   }
 
-  // Action buttons (Replay + Onboard)
-  html += `<div class="detail-actions">
-    <button class="detail-action-btn replay-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openReplay(${rc.r}, ${yr})">
-      <span class="action-icon">📊</span> 位置回放
-    </button>
-    <button class="detail-action-btn onboard-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openOnboard(this, '${rc.name}')">
-      <span class="action-icon">🎥</span> 车载摄像头
-    </button>
-  </div>`;
-  html += `<div id="replay-detail-r${rc.r}"></div>`;
+  // Action buttons (only for past races)
+  if (!data.isFuture) {
+    html += `<div class="detail-actions">
+      <button class="detail-action-btn replay-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openReplay(${rc.r}, ${yr})">
+        <span class="action-icon">📊</span> 位置回放
+      </button>
+      <button class="detail-action-btn onboard-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openOnboard(this, '${rc.name}')">
+        <span class="action-icon">🎥</span> 车载摄像头
+      </button>
+    </div>`;
+    html += `<div id="replay-detail-r${rc.r}"></div>`;
+  }
 
   // Placeholder for weather detail
   html += `<div id="weather-detail-r${rc.r}"></div>`;
@@ -127,7 +136,9 @@ function renderDetail(data, rc, el, year) {
     });
   }
 
-  if (!html || html.replace(/<div id="[^"]*"><\/div>/g, '').trim() === '') {
+  if (data.isFuture) {
+    html += '<div class="detail-loading" style="color:var(--muted);padding:1rem 0;">比赛尚未开始，敬请期待</div>';
+  } else if (!html || html.replace(/<div id="[^"]*"><\/div>/g, '').trim() === '') {
     html += '<div class="detail-loading">暂无成绩数据</div>';
   }
   el.innerHTML = html;

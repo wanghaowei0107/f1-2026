@@ -49,7 +49,7 @@ export function buildSchedule(raceList, onRaceClick) {
     const isPast = rc.end < today;
     const isNext = nextRace && rc.r === nextRace.r;
     const div = document.createElement('div');
-    div.className = 'race-row' + (isPast && !rc.cancelled ? ' is-past clickable' : '') + (isNext ? ' is-next' : '');
+    div.className = 'race-row' + (isPast && !rc.cancelled ? ' is-past' : '') + (!rc.cancelled ? ' clickable' : '') + (isNext ? ' is-next' : '');
 
     const d = new Date(rc.date);
     const dateStr = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
@@ -77,7 +77,7 @@ export function buildSchedule(raceList, onRaceClick) {
       </div>
     `;
 
-    if (isPast && !rc.cancelled) {
+    if (!rc.cancelled) {
       div.addEventListener('click', () => {
         if (onRaceClick) onRaceClick(rc, div);
       });
