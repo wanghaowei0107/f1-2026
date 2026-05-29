@@ -13,7 +13,7 @@ export function initComparison() {
   const btn = document.createElement('button');
   btn.className = 's-tab';
   btn.id = 'comparison-tab-btn';
-  btn.textContent = '对比';
+  btn.textContent = 'Compare';
   btn.onclick = () => showComparison('drivers');
   // Insert before the refresh button
   const refreshBtn = tabs.querySelector('.refresh-btn');
@@ -49,8 +49,8 @@ export async function showComparison(type) {
   panel.id = 'comparison-panel';
   panel.innerHTML = `
     <div class="cmp-header">
-      <div class="cmp-title">车手对比</div>
-      <button class="cmp-close-btn" onclick="window.closeComparison()">关闭</button>
+      <div class="cmp-title">Driver Comparison · 车手对比</div>
+      <button class="cmp-close-btn" onclick="window.closeComparison()">CLOSE</button>
     </div>
     <div class="cmp-selects">
       <select id="cmp-driver1" class="cmp-dropdown">
@@ -60,7 +60,7 @@ export async function showComparison(type) {
       <select id="cmp-driver2" class="cmp-dropdown">
         <option value="">选择车手 2</option>
       </select>
-      <button class="cmp-go-btn" onclick="window.runComparison()">对比</button>
+      <button class="cmp-go-btn" onclick="window.runComparison()">Compare</button>
     </div>
     <div id="cmp-results"></div>
   `;

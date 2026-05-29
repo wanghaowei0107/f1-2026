@@ -19,23 +19,21 @@
 <body>
 
 <header>
-  <div>
-    <div class="logo-text">F<span>1</span> 赛季</div>
-  </div>
-  <div class="season-badge">2026</div>
+  <div class="logo-text">F<span>1</span> 赛季</div>
+  <div class="season-badge">2026 EDITION</div>
   <div class="header-right">
-    <select id="season-select" onchange="switchSeason(this.value)" style="font-size:0.7rem;padding:4px 8px;border:1px solid var(--border);border-radius:2px;background:var(--surface);color:var(--text);cursor:pointer;">
+    <select id="season-select" onchange="switchSeason(this.value)" aria-label="选择赛季">
       <option value="2026" selected>2026</option>
       <option value="2025">2025</option>
       <option value="2024">2024</option>
       <option value="2023">2023</option>
     </select>
-    <div class="last-update" id="last-update">数据加载中...</div>
+    <div class="last-update" id="last-update">数据加载中</div>
     <button class="theme-toggle" onclick="toggleTheme()" title="切换深色模式" aria-label="切换深色模式">☀</button>
   </div>
 </header>
 
-<div id="offline-banner" style="display:none;background:var(--warning);color:#000;text-align:center;padding:8px;font-size:0.8rem;">
+<div id="offline-banner" style="display:none;">
   您当前处于离线状态，数据可能不是最新的
 </div>
 
@@ -45,60 +43,86 @@
     <div id="live-banner"></div>
 
     <div class="next-race-block">
-      <div class="nr-label">下一站</div>
-      <div class="nr-name" id="nr-name">加载中...</div>
+      <div class="nr-meta">
+        <span class="nr-label">Next Up · 下一站</span>
+        <span class="nr-round" id="nr-round"></span>
+      </div>
+      <div class="nr-name" id="nr-name">加载中</div>
       <div class="nr-date" id="nr-date"></div>
       <div class="countdown-row">
-        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">天</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">时</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">分</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">秒</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Days</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Hrs</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Min</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Sec</div></div>
       </div>
     </div>
 
     <div class="two-col">
 
       <div class="col-standings">
-        <div class="section-title">积分榜</div>
+        <h2 class="section-title">Standings</h2>
         <div class="standings-tabs">
-          <button class="s-tab active" onclick="showStandings('drivers', this)">车手</button>
-          <button class="s-tab" onclick="showStandings('constructors', this)">车队</button>
-          <button class="refresh-btn" onclick="loadStandings(true)" style="margin:0;margin-left:auto;">↻ 刷新</button>
+          <button class="s-tab active" onclick="showStandings('drivers', this)">Drivers</button>
+          <button class="s-tab" onclick="showStandings('constructors', this)">Constructors</button>
+          <button class="refresh-btn" onclick="loadStandings(true)"><span class="refresh-glyph">↻</span> Refresh</button>
         </div>
         <div id="standings-drivers" class="standings-list">
-          <div class="loading">从 Jolpica API 加载中...</div>
+          <div class="loading">从 Jolpica API 加载中</div>
         </div>
         <div id="standings-constructors" class="standings-list" style="display:none">
-          <div class="loading">从 Jolpica API 加载中...</div>
+          <div class="loading">从 Jolpica API 加载中</div>
         </div>
       </div>
 
       <div class="col-schedule">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
-          <div class="section-title" style="margin-bottom:0;">赛程</div>
-          <button class="ics-btn" onclick="exportICS()">导出日历 .ics</button>
+        <div class="col-head">
+          <h2 class="section-title">Calendar</h2>
+          <button class="ics-btn" onclick="exportICS()"><span class="refresh-glyph">↓</span> Export .ics</button>
         </div>
         <div class="schedule-list" id="schedule-list">
-          <div class="loading">加载赛程中...</div>
+          <div class="loading">加载赛程中</div>
         </div>
       </div>
 
     </div>
 
-    <div class="chart-container">
+    <section class="chart-container">
+      <div class="chart-eyebrow">Exhibit 01 — 积分进程</div>
       <div class="chart-header">
-        <div class="section-title" style="margin-bottom:0;">积分趋势</div>
+        <h2 class="section-title">Points Progression</h2>
         <div class="chart-tabs">
-          <button class="s-tab active" onclick="drawChart('drivers', this)">车手 Top 8</button>
-          <button class="s-tab" onclick="drawChart('constructors', this)">车队</button>
-          <button class="s-tab" id="compare-btn" onclick="toggleCompare()">对比</button>
+          <button class="s-tab active" onclick="drawChart('drivers', this)">Top 8 Drivers</button>
+          <button class="s-tab" onclick="drawChart('constructors', this)">Constructors</button>
+          <button class="s-tab" id="compare-btn" onclick="toggleCompare()">Compare 对比</button>
         </div>
       </div>
       <canvas class="chart-canvas" id="chart-canvas"></canvas>
-    </div>
+    </section>
 
 </main>
 
 <script type="module" src="js/app.js"></script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="ft-row ft-row-top">
+      <div class="ft-mark">
+        <span class="ft-logo">F<span>1</span></span>
+        <span class="ft-tag">Season 2026 Edition</span>
+      </div>
+      <div class="ft-meta">No. <span id="ft-issue">01</span> · 静态周刊 · Made for the paddock</div>
+    </div>
+    <div class="ft-row ft-row-bot">
+      <div class="ft-credits">
+        Data · <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica</a>
+        · <a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a>
+        · <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
+      </div>
+      <div class="ft-colophon">
+        Set in <em>Bebas Neue</em> &amp; <em>DM Sans</em>. Hand-built, no framework.
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

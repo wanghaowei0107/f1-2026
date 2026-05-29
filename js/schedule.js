@@ -36,13 +36,19 @@ export function buildSchedule(raceList, onRaceClick) {
     document.getElementById('nr-name').textContent = nextRace.name;
     const sd = new Date(nextRace.date);
     const ed = new Date(nextRace.end);
-    const fmt = d => d.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' });
+    const monStr = sd.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
     document.getElementById('nr-date').textContent =
-      `${fmt(sd)} — ${ed.getDate()}日 · ${nextRace.flag}`;
+      `${monStr} ${sd.getDate()}—${ed.getDate()} · ${nextRace.flag}`;
+    const roundEl = document.getElementById('nr-round');
+    if (roundEl) roundEl.textContent = `Round ${String(nextRace.r).padStart(2,'0')}`;
+    const issueEl = document.getElementById('ft-issue');
+    if (issueEl) issueEl.textContent = String(nextRace.r).padStart(2,'0');
     startCountdown(new Date(nextRace.date + 'T06:00:00Z'));
   } else {
     document.getElementById('nr-name').textContent = '赛季已结束';
-    document.getElementById('nr-date').textContent = '期待2027赛季';
+    document.getElementById('nr-date').textContent = '期待 2027 赛季';
+    const roundEl = document.getElementById('nr-round');
+    if (roundEl) roundEl.textContent = '';
   }
 
   list.forEach(rc => {
@@ -52,25 +58,25 @@ export function buildSchedule(raceList, onRaceClick) {
     div.className = 'race-row' + (isPast && !rc.cancelled ? ' is-past' : '') + (!rc.cancelled ? ' clickable' : '') + (isNext ? ' is-next' : '');
 
     const d = new Date(rc.date);
-    const dateStr = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+    const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toUpperCase();
 
     let statusHtml = '';
     if (rc.cancelled) {
-      statusHtml = '<span class="status-pill status-cancelled">已取消</span>';
+      statusHtml = '<span class="status-pill status-cancelled">Cancelled</span>';
     } else if (isPast) {
-      statusHtml = '<span class="status-pill status-done">已完赛</span>';
+      statusHtml = '<span class="status-pill status-done">Done</span>';
     } else if (isNext) {
-      statusHtml = '<span class="status-pill status-next">下一站</span>';
+      statusHtml = '<span class="status-pill status-next">Next</span>';
     }
 
     div.innerHTML = `
-      <span class="rr-round">R${rc.r}</span>
+      <span class="rr-round">R${String(rc.r).padStart(2,'0')}</span>
       <span class="rr-flag">${rc.flag}</span>
       <div>
         <div class="rr-name">${rc.name}</div>
       </div>
-      ${rc.sprint ? '<span class="sprint-pill">冲刺</span>' : '<span></span>'}
-      <div style="display:flex;align-items:center;gap:8px;">
+      ${rc.sprint ? '<span class="sprint-pill">Sprint</span>' : '<span></span>'}
+      <div style="display:flex;align-items:center;gap:10px;">
         <span class="rr-date">${dateStr}</span>
         ${statusHtml}
         <span id="weather-r${rc.r}"></span>

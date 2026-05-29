@@ -1,427 +1,565 @@
-/* 新功能组件样式 — 后续任务逐步添加 */
+/* ════════════════════════════════════════════════════════════════════
+   COMPONENT STYLES — Editorial Magazine
+   ════════════════════════════════════════════════════════════════════ */
 
-/* ─── 实时比赛横幅 ─── */
+/* ─── LIVE BANNER ───────────────────────────────────────────────────── */
 .live-banner {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border: none;
   border-left: 3px solid var(--red);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  margin-bottom: var(--space-4);
-  box-shadow: var(--shadow-md);
+  border-radius: 0;
+  padding: var(--s-5);
+  margin-bottom: var(--s-7);
+  box-shadow: none;
+  position: relative;
 }
 .live-header {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-bottom: var(--s-3);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--border-strong);
 }
 .live-dot {
-  width: 10px; height: 10px; border-radius: 50%; background: var(--red);
-  animation: livePulse 1.5s ease-in-out infinite;
-}
-@keyframes livePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  width: 8px; height: 8px; border-radius: 50%; background: var(--red);
+  animation: livePulse 1.6s ease-in-out infinite;
 }
 .live-label {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
-  letter-spacing: 0.08em; color: var(--red);
+  font-family: var(--font-display);
+  font-size: 1rem; letter-spacing: 0.16em;
+  color: var(--red);
+  text-transform: uppercase;
 }
 .live-session-name {
-  font-size: 0.85rem; color: var(--muted);
+  font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 500;
 }
 .live-close {
-  margin-left: auto; background: none; border: none; color: var(--muted);
-  cursor: pointer; font-size: 1.1rem;
+  margin-left: auto; background: none; border: none; color: var(--ink-4);
+  cursor: pointer; font-size: 1.1rem; line-height: 1;
+  transition: color var(--dur-fast) var(--ease);
 }
+.live-close:hover { color: var(--red); }
 .live-table {
-  width: 100%; border-collapse: collapse; font-size: 0.8rem;
+  width: 100%; border-collapse: collapse; font-size: 0.78rem;
 }
 .live-table th {
-  text-align: left; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+  padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
 .live-table td {
-  padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 7px 8px 7px 0;
+  border-bottom: 1px solid var(--rule-hair);
 }
+.live-table tr:last-child td { border-bottom: none; }
 
-/* ─── 车手/车队对比 ─── */
+/* ─── COMPARISON PANEL ──────────────────────────────────────────────── */
 #comparison-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  margin-bottom: 8px;
-  box-shadow: var(--shadow-md);
+  background: var(--surface-2);
+  border: none;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-5);
+  margin: 0 0 var(--s-2);
+  box-shadow: none;
+  position: relative;
+}
+#comparison-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 0;
+  width: 64px; height: 3px;
+  background: var(--red);
 }
 .cmp-header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--border-strong);
 }
 .cmp-title {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em;
+  font-family: var(--font-display);
+  font-size: 1.2rem; letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .cmp-close-btn {
-  font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 500;
-  background: none; border: 1px solid var(--border); color: var(--muted);
-  padding: 4px 10px; border-radius: 2px; cursor: pointer;
-  transition: all 0.15s;
+  font-size: 0.65rem; letter-spacing: 0.16em; font-weight: 500;
+  text-transform: uppercase;
+  background: none; border: none;
+  color: var(--ink-4);
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
 }
-.cmp-close-btn:hover { border-color: var(--red); color: var(--text); }
+.cmp-close-btn:hover { color: var(--red); }
 .cmp-selects {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-bottom: var(--s-5); flex-wrap: wrap;
 }
 .cmp-dropdown {
-  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 400;
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 400;
   background: var(--surface); color: var(--text);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 6px 10px; cursor: pointer; flex: 1; min-width: 120px;
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: 6px 10px 6px 0;
+  cursor: pointer; flex: 1; min-width: 120px;
+  transition: border-color var(--dur-fast) var(--ease);
 }
-.cmp-dropdown:focus { border-color: var(--red); outline: none; }
+.cmp-dropdown:focus, .cmp-dropdown:hover { border-bottom-color: var(--red); outline: none; }
 .cmp-vs {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
-  letter-spacing: 0.08em; color: var(--red); flex-shrink: 0;
+  font-family: var(--font-display); font-size: 1.3rem;
+  letter-spacing: 0.1em; color: var(--red); flex-shrink: 0;
 }
 .cmp-go-btn {
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-  background: var(--red); color: #fff; border: 1px solid var(--red);
-  padding: 6px 14px; border-radius: 2px; cursor: pointer;
-  transition: all 0.15s; flex-shrink: 0;
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--red); color: #fff;
+  border: 1px solid var(--red);
+  padding: 8px 18px; border-radius: 0;
+  cursor: pointer; flex-shrink: 0;
+  transition: all var(--dur-fast) var(--ease);
 }
-.cmp-go-btn:hover { background: var(--red-dark); }
+.cmp-go-btn:hover { background: var(--red-dark); border-color: var(--red-dark); }
 
-.cmp-card-container { margin-top: 0.5rem; }
+.cmp-card-container { margin-top: var(--s-3); }
 .cmp-drivers-header {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--s-5); margin-bottom: var(--s-5);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--border-strong);
 }
 .cmp-driver-head {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  padding: var(--space-2); border-left: 3px solid var(--border);
-  background: var(--surface2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap;
+  padding: 0 0 0 var(--s-3);
+  border-left: 3px solid var(--border-strong);
+  background: none; border-radius: 0;
 }
 .cmp-driver-color {
   width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
 }
 .cmp-driver-name {
-  font-size: 0.9rem; font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 .cmp-driver-team {
-  font-size: 0.72rem; color: var(--muted);
+  font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500;
 }
-.cmp-stats-rows { margin-bottom: 1rem; }
+.cmp-stats-rows { margin-bottom: var(--s-4); }
 .cmp-stat-row {
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-  padding: 8px 0; border-bottom: 1px solid var(--border);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--rule-hair);
 }
 .cmp-stat-row:last-child { border-bottom: none; }
 .cmp-stat-val {
-  font-size: 0.9rem; font-weight: 400; text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 .cmp-stat-val:first-child { text-align: right; }
 .cmp-stat-val:last-child { text-align: left; }
 .cmp-stat-val.cmp-winner {
-  font-weight: 500; color: var(--red);
+  color: var(--red);
 }
 .cmp-stat-label {
-  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); font-weight: 500; padding: 0 12px; text-align: center; min-width: 80px;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+  padding: 0 var(--s-4); text-align: center; min-width: 90px;
+  font-family: var(--font-body);
 }
 .cmp-race-table {
-  width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 0.5rem;
+  width: 100%; border-collapse: collapse;
+  font-size: 0.75rem; margin-top: var(--s-3);
 }
 .cmp-race-table th {
-  text-align: left; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--border);
+  text-align: left; font-size: 0.56rem; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+  padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
 .cmp-race-table td {
-  padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 6px 8px 6px 0; border-bottom: 1px solid var(--rule-hair);
 }
 .cmp-race-table tr:last-child td { border-bottom: none; }
 
 @media (max-width: 560px) {
   .cmp-selects { flex-direction: column; align-items: stretch; }
   .cmp-vs { text-align: center; }
-  .cmp-drivers-header { grid-template-columns: 1fr; }
+  .cmp-drivers-header { grid-template-columns: 1fr; gap: var(--s-3); }
   .cmp-stat-row { grid-template-columns: 1fr auto 1fr; }
   .cmp-race-table { font-size: 0.7rem; }
 }
 
-/* ─── 车手档案面板 ─── */
-.driver-profile-panel { }
+/* ─── DRIVER PROFILE ────────────────────────────────────────────────── */
 .profile-header {
-  padding: var(--space-2); margin-bottom: 1rem;
-  background: var(--surface2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0 0 var(--s-3) var(--s-3);
+  margin-bottom: var(--s-4);
+  background: none;
+  border-left: 3px solid var(--red);
+  border-radius: 0;
+  border-bottom: 1px solid var(--border-strong);
 }
 .profile-name-row {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap;
 }
 .profile-flag { font-size: 1.2rem; }
 .profile-name {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
-  letter-spacing: 0.04em; line-height: 1;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 .profile-team {
-  font-size: 0.8rem; font-weight: 500;
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .profile-meta {
-  font-size: 0.72rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em;
+  font-size: 0.65rem; color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 .profile-stats-grid {
-  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0.75rem;
+  display: flex; gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: var(--s-4);
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
 }
 .profile-stat {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 14px; text-align: center;
-  min-width: 64px; flex: 1;
+  background: none;
+  border: none;
+  border-right: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-3) var(--s-4);
+  text-align: left;
+  min-width: 80px; flex: 1;
 }
+.profile-stat:last-child { border-right: none; }
 .profile-stat-num {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
-  letter-spacing: 0.04em; line-height: 1; color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.85rem; letter-spacing: 0.02em;
+  line-height: 1; color: var(--text);
 }
 .profile-stat-label {
-  font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em;
-  text-transform: uppercase; margin-top: 2px;
+  font-size: 0.58rem; color: var(--muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  font-weight: 500;
 }
 @media (max-width: 560px) {
-  .profile-stats-grid { gap: 6px; }
-  .profile-stat { min-width: 50px; padding: 8px 10px; }
-  .profile-stat-num { font-size: 1.2rem; }
+  .profile-stats-grid { flex-wrap: wrap; }
+  .profile-stat { min-width: 33%; padding: var(--s-3); border-bottom: 1px solid var(--border-strong); }
+  .profile-stat-num { font-size: 1.4rem; }
 }
 
-/* ─── 车手/车队详情面板 ─── */
+/* ─── DRIVER/CONSTRUCTOR DETAIL ─────────────────────────────────────── */
 .driver-detail-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
-  padding: var(--space-2) var(--space-3);
-  margin-top: -5px;
-  margin-bottom: 4px;
+  background: var(--surface-2);
+  border: none;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-5);
+  margin: 0;
+  margin-bottom: -1px;
+  position: relative;
+}
+.driver-detail-panel::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
 }
 .driver-detail-panel .detail-label {
-  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--red); font-weight: 500; margin-bottom: 0.5rem;
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--red); font-weight: 500; margin-bottom: var(--s-3);
 }
 .driver-detail-tabs {
-  display: flex; gap: 6px; margin-bottom: 1rem;
+  display: flex; gap: var(--s-5); margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--border-strong);
 }
 .driver-mini-chart {
-  width: 100%; height: 160px;
+  width: 100%; height: 180px;
 }
 .driver-season-table {
-  width: 100%; border-collapse: collapse; font-size: 0.8rem;
+  width: 100%; border-collapse: collapse; font-size: 0.78rem;
 }
 .driver-season-table th {
-  text-align: left; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--border);
+  text-align: left; font-size: 0.58rem; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-4); font-weight: 500;
+  padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
 .driver-season-table td {
-  padding: 5px 6px; border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 7px 8px 7px 0; border-bottom: 1px solid var(--rule-hair);
 }
+.driver-season-table tr:last-child td { border-bottom: none; }
 .constructor-compare {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5);
+}
+@media (max-width: 560px) {
+  .constructor-compare { grid-template-columns: 1fr; gap: var(--s-3); }
 }
 
-/* ─── 赛道可视化 ─── */
+/* ─── CIRCUIT VIZ ───────────────────────────────────────────────────── */
 .circuit-svg-container {
-  width: 100%; height: 180px; margin-bottom: 0.75rem;
+  width: 100%; height: 200px;
+  margin-bottom: var(--s-3);
   display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  padding: var(--s-3);
 }
 .circuit-svg-container svg { max-width: 100%; max-height: 100%; }
-.circuit-svg-container .no-circuit { font-size: 0.75rem; color: var(--muted); }
+.circuit-svg-container .no-circuit {
+  font-size: 0.7rem; color: var(--muted);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
 
-/* ─── 天气 ─── */
+/* ─── WEATHER ───────────────────────────────────────────────────────── */
 .weather-inline {
-  font-size: 0.75rem; white-space: nowrap; color: var(--muted);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: var(--muted);
+  letter-spacing: 0.04em;
 }
-.weather-detail-container { margin-bottom: 0.75rem; }
-.weather-detail-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.weather-detail-container { margin-bottom: var(--s-3); }
+.weather-detail-grid {
+  display: flex; gap: 0;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+}
 .weather-day {
-  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-3); text-align: center; min-width: 80px;
-  box-shadow: var(--shadow-sm);
+  background: none;
+  border: none;
+  border-right: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-3) var(--s-4);
+  text-align: center;
+  min-width: 80px; flex: 1;
+  box-shadow: none;
 }
+.weather-day:last-child { border-right: none; }
 .weather-day-label {
-  font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em;
-  text-transform: uppercase; margin-bottom: 4px;
+  font-size: 0.58rem; color: var(--muted);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 6px; font-weight: 500;
 }
-.weather-day-icon { font-size: 1.4rem; margin-bottom: 2px; }
-.weather-day-temp { font-size: 0.75rem; }
-.weather-day-detail { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+.weather-day-icon { font-size: 1.5rem; margin-bottom: 4px; }
+.weather-day-temp {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+.weather-day-detail { font-size: 0.62rem; color: var(--muted); margin-top: 2px; }
 
-/* ─── 赛季选择器 ─── */
+/* ─── SEASON SELECT (legacy class) ──────────────────────────────────── */
 .season-select {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
-  background: var(--surface); color: var(--text);
-  border: 1px solid var(--border); border-radius: 2px;
-  padding: 4px 8px; cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
+  background: transparent; color: var(--text);
+  border: none; border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: 4px 8px 4px 0; cursor: pointer;
 }
 .season-select:hover { border-color: var(--red); }
 
-/* Skeleton loading states */
+/* ─── SKELETONS ─────────────────────────────────────────────────────── */
 .skeleton-row {
   display: grid;
-  grid-template-columns: 36px 28px 1fr auto auto;
+  grid-template-columns: 36px 22px 1fr 110px 56px;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
 }
-
 .skeleton-block {
   height: 16px;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
+.skeleton-block.round { width: 36px; }
+.skeleton-block.flag { width: 22px; height: 16px; }
+.skeleton-block.name { width: 140px; }
+.skeleton-block.date { width: 60px; }
+.skeleton-block.status { width: 50px; height: 16px; }
 
-.skeleton-block.round {
-  width: 36px;
-}
-
-.skeleton-block.flag {
-  width: 28px;
-  height: 20px;
-}
-
-.skeleton-block.name {
-  width: 120px;
-}
-
-.skeleton-block.date {
-  width: 60px;
-}
-
-.skeleton-block.status {
-  width: 50px;
-  height: 20px;
-}
-
-/* ─── 赛事详情操作按钮 ─── */
+/* ─── DETAIL ACTIONS ────────────────────────────────────────────────── */
 .detail-actions {
-  display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap;
+  display: flex; gap: var(--s-3);
+  margin-bottom: var(--s-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--border-strong);
 }
 .detail-action-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
-  letter-spacing: 0.04em; color: var(--text);
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 6px 12px;
-  cursor: pointer; transition: all 0.15s;
+  font-family: var(--font-body);
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: 6px 0;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
 }
 .detail-action-btn:hover {
-  border-color: var(--red); color: var(--red);
+  border-bottom-color: var(--red);
+  color: var(--red);
 }
 .detail-action-btn .action-icon {
   font-size: 0.85rem;
 }
 
-/* ─── 比赛回放 ─── */
+/* ─── REPLAY ────────────────────────────────────────────────────────── */
 .replay-container {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  margin-bottom: 0.75rem;
-  box-shadow: var(--shadow-sm);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-4) 0;
+  margin-bottom: var(--s-3);
+  box-shadow: none;
 }
 .replay-header {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-bottom: var(--s-3);
 }
 .replay-header .detail-label {
-  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--red); font-weight: 500;
 }
 .replay-session-name {
-  font-size: 0.8rem; color: var(--muted);
+  font-size: 0.7rem; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
 }
 .replay-canvas {
-  width: 100%; height: 280px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  margin-bottom: 0.75rem;
+  width: 100%; height: 300px;
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  margin-bottom: var(--s-3);
+  background: var(--surface);
 }
 .replay-controls {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-bottom: var(--s-3);
+  padding: var(--s-3) 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
 }
 .replay-play-btn {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   background: var(--red); color: #fff;
   border: none; border-radius: 50%;
-  cursor: pointer; transition: background 0.15s;
+  cursor: pointer;
   flex-shrink: 0;
+  transition: background var(--dur-fast) var(--ease);
 }
 .replay-play-btn:hover { background: var(--red-dark); }
 .replay-slider {
   flex: 1;
   -webkit-appearance: none; appearance: none;
-  height: 4px; background: var(--border);
-  border-radius: 2px; outline: none;
+  height: 2px; background: var(--border-strong);
+  border-radius: 0; outline: none;
   cursor: pointer;
 }
 .replay-slider::-webkit-slider-thumb {
   -webkit-appearance: none; appearance: none;
-  width: 14px; height: 14px;
+  width: 12px; height: 12px;
   background: var(--red); border-radius: 50%;
   cursor: pointer;
 }
 .replay-slider::-moz-range-thumb {
-  width: 14px; height: 14px;
+  width: 12px; height: 12px;
   background: var(--red); border-radius: 50%;
   border: none; cursor: pointer;
 }
 .replay-lap-label {
-  font-size: 0.72rem; color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text);
   min-width: 80px; text-align: right;
   white-space: nowrap;
+  letter-spacing: 0.04em;
 }
 .replay-drivers {
   display: flex; flex-wrap: wrap; gap: 4px;
 }
 .replay-driver-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem; font-weight: 500;
-  letter-spacing: 0.04em;
-  background: var(--surface2); color: var(--text);
-  border: 1.5px solid var(--border);
-  border-radius: 2px; padding: 3px 8px;
-  cursor: pointer; transition: all 0.15s;
+  font-family: var(--font-body);
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none; color: var(--ink-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
 }
-.replay-driver-btn:hover {
-  background: var(--surface);
-}
+.replay-driver-btn:hover { border-color: var(--red); color: var(--red); }
 .replay-driver-btn.active {
   background: var(--red); color: #fff;
   border-color: var(--red);
 }
 
-/* ─── 车载摄像头 ─── */
+/* ─── ONBOARD ───────────────────────────────────────────────────────── */
 .onboard-container {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  margin-bottom: 0.75rem;
-  box-shadow: var(--shadow-sm);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding: var(--s-4) 0;
+  margin-bottom: var(--s-3);
+  box-shadow: none;
 }
 .onboard-header {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-bottom: var(--s-3);
 }
 .onboard-header .detail-label {
-  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--red); font-weight: 500;
 }
 .onboard-status {
   display: flex; align-items: center; gap: 6px;
-  font-size: 0.72rem; color: var(--red); font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: 0.65rem; color: var(--red); font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .onboard-video {
   position: relative;
-  width: 100%; padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  margin-bottom: 0.75rem;
-  border-radius: var(--radius-sm);
+  width: 100%; padding-bottom: 56.25%;
+  margin-bottom: var(--s-3);
+  border-radius: 0;
   overflow: hidden;
+  background: #000;
 }
 .onboard-video iframe {
   position: absolute;
@@ -430,18 +568,59 @@
   border: none;
 }
 .onboard-note {
-  font-size: 0.72rem; color: var(--muted);
+  font-size: 0.65rem; color: var(--muted);
   text-align: center;
+  letter-spacing: 0.1em;
 }
 .onboard-inline {
-  margin-top: 0.75rem;
+  margin-top: var(--s-3);
 }
 
-/* ─── 回放 + 车载响应式 ─── */
+/* ─── CIRCUIT INFO / SESSION SCHEDULE ───────────────────────────────── */
+.circuit-info {
+  font-size: 0.7rem; color: var(--muted);
+  margin-bottom: var(--s-3);
+  display: flex; gap: var(--s-4);
+  flex-wrap: wrap;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.circuit-info span { white-space: nowrap; }
+
+.session-schedule {
+  display: flex; flex-wrap: wrap; gap: 0;
+  margin-bottom: var(--s-3);
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+}
+.session-item {
+  font-size: 0.68rem;
+  padding: var(--s-3) var(--s-4);
+  border: none;
+  border-right: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  flex: 1;
+  min-width: 100px;
+}
+.session-item:last-child { border-right: none; }
+.session-item strong {
+  color: var(--text); font-weight: 500;
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+/* ─── RESPONSIVE: REPLAY/ONBOARD ────────────────────────────────────── */
 @media (max-width: 560px) {
-  .replay-canvas { height: 200px; }
+  .replay-canvas { height: 220px; }
   .replay-controls { flex-wrap: wrap; }
   .replay-lap-label { width: 100%; text-align: center; }
-  .detail-actions { flex-direction: column; }
-  .detail-action-btn { width: 100%; justify-content: center; }
+  .detail-actions { flex-direction: column; align-items: stretch; }
+  .detail-action-btn { justify-content: flex-start; padding: 8px 0; }
 }

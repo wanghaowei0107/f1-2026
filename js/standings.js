@@ -34,7 +34,9 @@ function renderDrivers(standings) {
   const el = document.getElementById('standings-drivers');
   el.innerHTML = '';
   const maxPts = parseFloat(standings[0]?.points || 1);
-  standings.forEach(s => {
+  const TOP_VISIBLE = 8;
+
+  standings.forEach((s, idx) => {
     const pos = parseInt(s.position);
     const pts = parseFloat(s.points);
     const pct = Math.round((pts / maxPts) * 100);
@@ -43,10 +45,14 @@ function renderDrivers(standings) {
     const flag = driverFlag(d.nationality);
     const driverId = d.driverId || '';
     const row = document.createElement('div');
-    row.className = 'driver-row clickable';
+    row.className = 'driver-row clickable' + (pos <= 3 ? ' top-3' : '');
     row.setAttribute('data-driver-id', driverId);
+    if (idx >= TOP_VISIBLE) {
+      row.classList.add('hidden-row');
+      row.style.display = 'none';
+    }
     row.innerHTML = `
-      <span class="st-pos ${posClass(pos)}">${pos}</span>
+      <span class="st-pos ${posClass(pos)}">${String(pos).padStart(2,'0')}</span>
       <span class="st-flag">${flag}</span>
       <div>
         <div class="st-name">${d.givenName} ${d.familyName}</div>
@@ -57,23 +63,28 @@ function renderDrivers(standings) {
     `;
     el.appendChild(row);
   });
+
+  if (standings.length > TOP_VISIBLE) {
+    appendShowMore(el, standings.length - TOP_VISIBLE);
+  }
 }
 
 function renderConstructors(standings) {
   const el = document.getElementById('standings-constructors');
   el.innerHTML = '';
   const maxPts = parseFloat(standings[0]?.points || 1);
-  standings.forEach(s => {
+
+  standings.forEach((s) => {
     const pos = parseInt(s.position);
     const pts = parseFloat(s.points);
     const pct = maxPts > 0 ? Math.round((pts / maxPts) * 100) : 0;
     const color = teamColor(s.Constructor.name);
     const constructorId = s.Constructor.constructorId || '';
     const row = document.createElement('div');
-    row.className = 'cons-row clickable';
+    row.className = 'cons-row clickable' + (pos <= 3 ? ' top-3' : '');
     row.setAttribute('data-constructor-id', constructorId);
     row.innerHTML = `
-      <span class="st-pos ${posClass(pos)}">${pos}</span>
+      <span class="st-pos ${posClass(pos)}">${String(pos).padStart(2,'0')}</span>
       <div class="cons-dot" style="background:${color}"></div>
       <div class="st-name">${s.Constructor.name}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
@@ -81,6 +92,26 @@ function renderConstructors(standings) {
     `;
     el.appendChild(row);
   });
+}
+
+function appendShowMore(container, hiddenCount) {
+  const btn = document.createElement('button');
+  btn.className = 'show-more-btn';
+  btn.dataset.expanded = '0';
+  const setLabel = () => {
+    const expanded = btn.dataset.expanded === '1';
+    btn.textContent = expanded ? 'Show fewer' : `Show remaining ${hiddenCount}`;
+  };
+  setLabel();
+  btn.addEventListener('click', () => {
+    const expanded = btn.dataset.expanded === '1';
+    container.querySelectorAll('.hidden-row').forEach(r => {
+      r.style.display = expanded ? 'none' : '';
+    });
+    btn.dataset.expanded = expanded ? '0' : '1';
+    setLabel();
+  });
+  container.appendChild(btn);
 }
 
 export async function loadStandings(year, force) {

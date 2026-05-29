@@ -87,7 +87,7 @@ export async function drawChart(mode, year, compareData) {
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
   const W = rect.width, H = rect.height;
-  const pad = { top: 10, right: 80, bottom: 30, left: 36 };
+  const pad = { top: 14, right: 90, bottom: 36, left: 44 };
 
   ctx.clearRect(0, 0, W, H);
 
@@ -112,30 +112,41 @@ export async function drawChart(mode, year, compareData) {
 
   // Grid
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-  const textColor = isDark ? '#666' : '#aaa';
+  const gridColor = isDark ? 'rgba(242,238,229,0.06)' : 'rgba(31,27,22,0.06)';
+  const axisColor = isDark ? 'rgba(242,238,229,0.18)' : 'rgba(31,27,22,0.18)';
+  const textColor = isDark ? '#8A8377' : '#7A7368';
+  const labelFont = "10px 'DM Sans', sans-serif";
   ctx.strokeStyle = gridColor;
   ctx.lineWidth = 1;
   const gridLines = 5;
   for (let i = 0; i <= gridLines; i++) {
     const y = pad.top + plotH - (plotH * i / gridLines);
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
-    ctx.fillStyle = textColor; ctx.font = '10px DM Sans'; ctx.textAlign = 'right';
-    ctx.fillText(Math.round(maxPts * i / gridLines), pad.left - 6, y + 3);
+    ctx.fillStyle = textColor;
+    ctx.font = labelFont;
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxPts * i / gridLines), pad.left - 8, y + 3);
   }
+
+  // Axis baseline
+  ctx.strokeStyle = axisColor;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top + plotH);
+  ctx.lineTo(W - pad.right, pad.top + plotH);
+  ctx.stroke();
 
   // X labels
   ctx.textAlign = 'center';
   rounds.forEach((rnd, i) => {
     const x = pad.left + (plotW * i / (rounds.length - 1 || 1));
-    ctx.fillStyle = textColor; ctx.font = '10px DM Sans';
-    ctx.fillText('R' + rnd, x, H - pad.bottom + 16);
+    ctx.fillStyle = textColor; ctx.font = labelFont;
+    ctx.fillText('R' + String(rnd).padStart(2,'0'), x, H - pad.bottom + 18);
   });
 
   // Lines
   entries.forEach(entry => {
     ctx.strokeStyle = entry.color;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.75;
     ctx.lineJoin = 'round';
     ctx.setLineDash([]);
     ctx.beginPath();
@@ -150,9 +161,11 @@ export async function drawChart(mode, year, compareData) {
     const lastPts = entry.series[entry.series.length - 1];
     const lx = pad.left + plotW;
     const ly = pad.top + plotH - (plotH * lastPts / maxPts);
-    ctx.beginPath(); ctx.arc(lx, ly, 3, 0, Math.PI * 2); ctx.fillStyle = entry.color; ctx.fill();
-    ctx.fillStyle = isDark ? '#ccc' : '#333'; ctx.font = '10px DM Sans'; ctx.textAlign = 'left';
-    ctx.fillText(entry.name, lx + 6, ly + 3);
+    ctx.beginPath(); ctx.arc(lx, ly, 2.5, 0, Math.PI * 2); ctx.fillStyle = entry.color; ctx.fill();
+    ctx.fillStyle = isDark ? '#C9C2B5' : '#3F3A32';
+    ctx.font = "500 10px 'DM Sans', sans-serif";
+    ctx.textAlign = 'left';
+    ctx.fillText(entry.name, lx + 8, ly + 3);
   });
 
   // Compare data (dashed lines for history comparison)

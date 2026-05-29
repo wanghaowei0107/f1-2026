@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f1-2026-v5';
+const CACHE_NAME = 'f1-2026-v7';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
