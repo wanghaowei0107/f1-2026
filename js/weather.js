@@ -13,12 +13,12 @@ export async function initWeather() {
     !rc.cancelled && rc.date >= todayStr && rc.date <= futureStr
   );
 
-  for (const rc of upcoming) {
+  await Promise.all(upcoming.map(async rc => {
     const ci = circuitInfo[rc.r];
-    if (!ci?.lat || !ci?.lng) continue;
+    if (!ci?.lat || !ci?.lng) return;
     try {
       const weather = await api.getWeatherForecast(ci.lat, ci.lng);
-      if (!weather?.daily) continue;
+      if (!weather?.daily) return;
       const raceIdx = weather.daily.time.indexOf(rc.date);
       if (raceIdx !== -1) {
         const code = weather.daily.weathercode[raceIdx];
@@ -28,7 +28,7 @@ export async function initWeather() {
         if (span) span.textContent = `${weatherIcon(code)} ${lo}-${hi}°C`;
       }
     } catch(e) {}
-  }
+  }));
 
   observeWeatherDetail();
 }

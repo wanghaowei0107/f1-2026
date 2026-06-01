@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f1-2026-v9';
+const CACHE_NAME = 'f1-2026-v11';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -7,6 +7,7 @@ const STATIC_ASSETS = [
   '/js/app.js',
   '/js/data.js',
   '/js/api.js',
+  '/js/avatars.js',
   '/js/schedule.js',
   '/js/standings.js',
   '/js/chart.js',
@@ -23,7 +24,8 @@ const STATIC_ASSETS = [
   '/js/circuit.js',
   '/js/circuit-map.js',
   '/js/insights.js',
-  '/manifest.json'
+  '/manifest.json',
+  ...Array.from({ length: 24 }, (_, i) => `/circuits/${i + 1}.svg`)
 ];
 
 self.addEventListener('install', (event) => {
@@ -53,6 +55,11 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
 
   if (request.method !== 'GET') return;
+
+  // OpenF1 live data changes every few seconds — never cache it, always hit network.
+  if (url.hostname.includes('openf1.org')) {
+    return; // let the browser handle it directly
+  }
 
   if (url.hostname.includes('api.')) {
     event.respondWith(

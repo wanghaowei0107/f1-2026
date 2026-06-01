@@ -1,5 +1,6 @@
-import { teamColor, driverFlag, posClass } from './data.js';
+import { teamColor, driverFlag, posClass, esc } from './data.js';
 import { getDriverStandings, getConstructorStandings } from './api.js';
+import { driverHeadshot, avatarImg } from './avatars.js';
 
 let standingsLoaded = false;
 
@@ -43,20 +44,24 @@ function renderDrivers(standings) {
     const color = teamColor(s.Constructors[0]?.name);
     const d = s.Driver;
     const flag = driverFlag(d.nationality);
+    const code = d.code || '';
     const driverId = d.driverId || '';
     const row = document.createElement('div');
     row.className = 'driver-row clickable' + (pos <= 3 ? ' top-3' : '');
     row.setAttribute('data-driver-id', driverId);
+    if (code) row.setAttribute('data-driver-code', code);
     if (idx >= TOP_VISIBLE) {
       row.classList.add('hidden-row');
       row.style.display = 'none';
     }
+    const flagHtml = `<span class="st-flag">${flag}</span>`;
+    const avatarHtml = avatarImg(driverHeadshot(code), flagHtml, 'st-avatar');
     row.innerHTML = `
       <span class="st-pos ${posClass(pos)}">${String(pos).padStart(2,'0')}</span>
-      <span class="st-flag">${flag}</span>
+      ${avatarHtml}
       <div>
-        <div class="st-name">${d.givenName} ${d.familyName}</div>
-        <div class="st-team">${s.Constructors[0]?.name || ''}</div>
+        <div class="st-name">${esc(d.givenName)} ${esc(d.familyName)}</div>
+        <div class="st-team">${esc(s.Constructors[0]?.name || '')}</div>
       </div>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
       <span class="st-pts">${pts}</span>
@@ -86,7 +91,7 @@ function renderConstructors(standings) {
     row.innerHTML = `
       <span class="st-pos ${posClass(pos)}">${String(pos).padStart(2,'0')}</span>
       <div class="cons-dot" style="background:${color}"></div>
-      <div class="st-name">${s.Constructor.name}</div>
+      <div class="st-name">${esc(s.Constructor.name)}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
       <span class="st-pts">${pts}</span>
     `;
@@ -114,8 +119,7 @@ function appendShowMore(container, hiddenCount) {
   container.appendChild(btn);
 }
 
-export async function loadStandings(year, force) {
-  if (standingsLoaded && !force) return;
+export async function loadStandings(year, force) {  if (standingsLoaded && !force) return;
   standingsLoaded = true;
 
   const yr = year || 2026;
@@ -152,4 +156,18 @@ export async function loadStandings(year, force) {
     document.getElementById('standings-constructors').innerHTML =
       '<div class="error-msg">加载失败，请检查网络后点击刷新</div>';
   }
+}
+
+// Progressive enhancement: once avatars finish loading, swap the flag emoji in
+// already-rendered driver rows for the headshot. Called by app.js.
+export function refreshAvatars() {
+  document.querySelectorAll('.driver-row[data-driver-code]').forEach(row => {
+    const code = row.getAttribute('data-driver-code');
+    const url = driverHeadshot(code);
+    if (!url) return;
+    const slot = row.querySelector('.st-flag, .st-avatar');
+    if (!slot || slot.classList.contains('avatar')) return; // already a headshot
+    const flagHtml = slot.outerHTML;
+    slot.outerHTML = avatarImg(url, flagHtml, 'st-avatar');
+  });
 }

@@ -1,6 +1,7 @@
 import { races } from './data.js';
 import { buildSchedule } from './schedule.js';
-import { loadStandings, showStandings } from './standings.js';
+import { loadStandings, showStandings, refreshAvatars } from './standings.js';
+import { loadDriverAvatars } from './avatars.js';
 import { drawChart, getChartMode } from './chart.js';
 import { toggleRaceDetail } from './race-detail.js';
 import { exportICS } from './ics.js';
@@ -44,7 +45,8 @@ async function switchSeason(year) {
     const { loadHistorySeason } = await import('./history.js');
     await loadHistorySeason(currentSeason);
   }
-  loadStandings(currentSeason, true);
+  await loadStandings(currentSeason, true);
+  refreshAvatars();
   drawChart(getChartMode(), currentSeason);
   renderInsights(currentSeason);
 }
@@ -53,7 +55,7 @@ async function switchSeason(year) {
 // HTML onclick attributes need functions on window since modules don't create globals
 window.toggleTheme = toggleTheme;
 window.showStandings = function(type, btn) { showStandings(type, btn); };
-window.loadStandings = function(force) { loadStandings(currentSeason, force); };
+window.loadStandings = function(force) { loadStandings(currentSeason, force).then(() => refreshAvatars()); };
 window.exportICS = exportICS;
 window.drawChart = function(mode, btn) {
   // Update tab active state
@@ -80,7 +82,12 @@ function onRaceClick(rc, rowEl) {
 buildSchedule(races, onRaceClick);
 loadStandings(currentSeason);
 drawChart('drivers', currentSeason);
-window.addEventListener('resize', () => drawChart(getChartMode(), currentSeason));
+
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => drawChart(getChartMode(), currentSeason), 150);
+});
 
 // Initialize modules
 initWeather();
@@ -92,6 +99,9 @@ initReplay();
 initOnboard();
 initCircuitObserver();
 initInsights();
+
+// Load driver headshots (async, non-blocking), then backfill rendered rows.
+loadDriverAvatars().then(() => refreshAvatars());
 
 // Replay + Onboard integration
 window._openReplay = async function(round, year) {

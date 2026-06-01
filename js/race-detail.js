@@ -1,8 +1,16 @@
-import { circuitInfo, teamColor, posClass } from './data.js';
+import { circuitInfo, teamColor, posClass, esc } from './data.js';
 import { getQualifyingResults, getSprintResults, getRaceResults, getRaceSchedule } from './api.js';
 import { showReplay } from './race-replay.js';
 import { showOnboard } from './onboard.js';
 import { renderCircuitSvg } from './circuit.js';
+import { driverHeadshot, avatarImg } from './avatars.js';
+
+// Driver cell: small headshot + 3-letter code, falling back to just the code.
+function driverCell(code) {
+  const safe = esc(code);
+  const codeHtml = `<span>${safe}</span>`;
+  return `<span class="result-driver-cell">${avatarImg(driverHeadshot(code), '', 'result-avatar')}${codeHtml}</span>`;
+}
 
 const detailCache = {};
 
@@ -97,7 +105,7 @@ function renderDetail(data, rc, el, year) {
       <button class="detail-action-btn replay-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openReplay(${rc.r}, ${yr})">
         <span class="action-icon">📊</span> 位置回放
       </button>
-      <button class="detail-action-btn onboard-btn" data-round="${rc.r}" onclick="event.stopPropagation(); window._openOnboard(this, '${rc.name}')">
+      <button class="detail-action-btn onboard-btn" data-round="${rc.r}" data-meeting="${esc(rc.name)}" onclick="event.stopPropagation(); window._openOnboard(this, this.dataset.meeting)">
         <span class="action-icon">🎥</span> 车载摄像头
       </button>
     </div>`;
@@ -110,9 +118,9 @@ function renderDetail(data, rc, el, year) {
   if (data.qualifying) {
     html += buildResultTable('排位赛', data.qualifying, ['P','车手','车队','Q1','Q2','Q3'], q => {
       const color = teamColor(q.Constructor?.name);
-      return `<td>${q.position}</td><td>${q.Driver.code}</td>
-        <td><span class="team-dot" style="background:${color}"></span>${q.Constructor?.name||''}</td>
-        <td>${q.Q1||'-'}</td><td>${q.Q2||'-'}</td><td>${q.Q3||'-'}</td>`;
+      return `<td>${esc(q.position)}</td><td>${driverCell(q.Driver.code)}</td>
+        <td><span class="team-dot" style="background:${color}"></span>${esc(q.Constructor?.name||'')}</td>
+        <td>${esc(q.Q1||'-')}</td><td>${esc(q.Q2||'-')}</td><td>${esc(q.Q3||'-')}</td>`;
     });
   }
 
@@ -120,9 +128,9 @@ function renderDetail(data, rc, el, year) {
     html += buildResultTable('冲刺赛', data.sprint, ['P','车手','车队','成绩/状态','积分'], s => {
       const color = teamColor(s.Constructor?.name);
       const time = s.Time?.time || s.status || '-';
-      return `<td>${s.position}</td><td>${s.Driver.code}</td>
-        <td><span class="team-dot" style="background:${color}"></span>${s.Constructor?.name||''}</td>
-        <td>${time}</td><td>${s.points}</td>`;
+      return `<td>${esc(s.position)}</td><td>${driverCell(s.Driver.code)}</td>
+        <td><span class="team-dot" style="background:${color}"></span>${esc(s.Constructor?.name||'')}</td>
+        <td>${esc(time)}</td><td>${esc(s.points)}</td>`;
     });
   }
 
@@ -130,9 +138,9 @@ function renderDetail(data, rc, el, year) {
     html += buildResultTable('正赛', data.race, ['P','车手','车队','成绩/状态','积分'], r => {
       const color = teamColor(r.Constructor?.name);
       const time = r.Time?.time || r.status || '-';
-      return `<td>${r.position}</td><td>${r.Driver.code}</td>
-        <td><span class="team-dot" style="background:${color}"></span>${r.Constructor?.name||''}</td>
-        <td>${time}</td><td>${r.points}</td>`;
+      return `<td>${esc(r.position)}</td><td>${driverCell(r.Driver.code)}</td>
+        <td><span class="team-dot" style="background:${color}"></span>${esc(r.Constructor?.name||'')}</td>
+        <td>${esc(time)}</td><td>${esc(r.points)}</td>`;
     });
   }
 

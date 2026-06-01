@@ -447,7 +447,7 @@ main {
 }
 .driver-row:last-child, .cons-row:last-child { border-bottom: none; }
 
-.driver-row { grid-template-columns: 36px 22px 1fr 110px 56px; }
+.driver-row { grid-template-columns: 36px 32px 1fr 110px 56px; }
 .cons-row { grid-template-columns: 36px 4px 1fr 110px 56px; }
 
 /* Hover: red rule on left edge */
@@ -481,6 +481,31 @@ main {
 .st-pos.bronze { color: var(--ink-3); }
 
 .st-flag { font-size: 1.05rem; line-height: 1; }
+
+/* Driver headshots (hot-linked from OpenF1 official media) */
+.avatar {
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--surface-2);
+  display: inline-block;
+  vertical-align: middle;
+}
+/* Flag-emoji fallback rendered as a round chip matching the avatar footprint */
+.avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface-2);
+  vertical-align: middle;
+  line-height: 1;
+}
+.st-avatar {
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 0 0 1px var(--border-strong);
+}
+.driver-row.top-3 .st-avatar { width: 34px; height: 34px; }
 .st-name {
   font-family: var(--font-body);
   font-size: 1rem;
@@ -708,6 +733,16 @@ main {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.82rem;
+}
+.result-driver-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.result-avatar {
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 0 0 1px var(--border-strong);
 }
 .result-table th {
   text-align: left;

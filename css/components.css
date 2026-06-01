@@ -51,6 +51,16 @@
   border-bottom: 1px solid var(--rule-hair);
 }
 .live-table tr:last-child td { border-bottom: none; }
+.live-driver-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.live-avatar {
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 0 0 1px var(--border-strong);
+}
 
 /* ─── COMPARISON PANEL ──────────────────────────────────────────────── */
 #comparison-panel {
@@ -191,6 +201,9 @@
 
 /* ─── DRIVER PROFILE ────────────────────────────────────────────────── */
 .profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
   padding: 0 0 var(--s-3) var(--s-3);
   margin-bottom: var(--s-4);
   background: none;
@@ -198,6 +211,13 @@
   border-radius: 0;
   border-bottom: 1px solid var(--border-strong);
 }
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px var(--border-strong);
+}
+.profile-header-text { min-width: 0; }
 .profile-name-row {
   display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap;
 }

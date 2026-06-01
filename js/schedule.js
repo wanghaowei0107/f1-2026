@@ -1,4 +1,5 @@
 import { races } from './data.js';
+import { esc } from './data.js';
 
 let countdownInterval;
 
@@ -44,6 +45,7 @@ export function buildSchedule(raceList, onRaceClick) {
     if (issueEl) issueEl.textContent = String(nextRace.r).padStart(2,'0');
     startCountdown(new Date(nextRace.date + 'T06:00:00Z'));
   } else {
+    clearInterval(countdownInterval);
     document.getElementById('nr-name').textContent = '赛季已结束';
     document.getElementById('nr-date').textContent = '期待 2027 赛季';
     const roundEl = document.getElementById('nr-round');
@@ -72,7 +74,7 @@ export function buildSchedule(raceList, onRaceClick) {
       <span class="rr-round">R${String(rc.r).padStart(2,'0')}</span>
       <span class="rr-flag">${rc.flag}</span>
       <div>
-        <div class="rr-name">${rc.name}</div>
+        <div class="rr-name">${esc(rc.name)}</div>
       </div>
       ${rc.sprint ? '<span class="sprint-pill">冲刺赛</span>' : '<span></span>'}
       <div style="display:flex;align-items:center;gap:10px;">

@@ -85,6 +85,15 @@ export function posClass(p) {
   return p === 1 ? 'gold' : p === 2 ? 'silver' : p === 3 ? 'bronze' : '';
 }
 
+// ─── HTML ESCAPE ───────────────────────────────────────────────────────────
+// Escape external API strings (driver/team names, codes, statuses) before
+// interpolating into innerHTML, to prevent injection.
+const ESCAPE_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+export function esc(value) {
+  if (value == null) return '';
+  return String(value).replace(/[&<>"']/g, ch => ESCAPE_MAP[ch]);
+}
+
 // ─── WEATHER ICONS (WMO codes) ─────────────────────────────────────────────
 export const weatherIcons = {
   0: '☀️',   // Clear sky

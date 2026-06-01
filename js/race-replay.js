@@ -1,6 +1,6 @@
 // ─── RACE REPLAY (POSITION CHART) ────────────────────────────────────────────
 import * as api from './api.js';
-import { teamColor } from './data.js';
+import { teamColor, esc } from './data.js';
 
 // ─── DATA LAYER ─────────────────────────────────────────────────────────────
 
@@ -324,7 +324,7 @@ export async function showReplay(year, round, containerEl) {
       <div class="replay-container">
         <div class="replay-header">
           <span class="detail-label">比赛位置回放</span>
-          <span class="replay-session-name">${session.meeting_name || ''} - ${session.session_name || 'Race'}</span>
+          <span class="replay-session-name">${esc(session.meeting_name || '')} - ${esc(session.session_name || 'Race')}</span>
         </div>
         <canvas class="replay-canvas" id="replay-canvas-${round}"></canvas>
         <div class="replay-controls">
@@ -396,6 +396,6 @@ export async function showReplay(year, round, containerEl) {
     window.addEventListener('resize', resizeHandler);
 
   } catch (err) {
-    containerEl.innerHTML = `<div class="detail-loading">回放数据加载失败: ${err.message}</div>`;
+    containerEl.innerHTML = `<div class="detail-loading">回放数据加载失败: ${esc(err.message)}</div>`;
   }
 }

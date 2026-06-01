@@ -1,6 +1,6 @@
 // ─── DRIVER / TEAM COMPARISON ──────────────────────────────────────────────
 import * as api from './api.js';
-import { teamColor, driverFlag } from './data.js';
+import { teamColor, driverFlag, esc } from './data.js';
 
 let comparisonVisible = false;
 let allDrivers = [];
@@ -196,13 +196,13 @@ function renderComparison(cmp, id1, id2) {
     <div class="cmp-drivers-header">
       <div class="cmp-driver-head" style="border-color:${color1}">
         <span class="cmp-driver-color" style="background:${color1}"></span>
-        <span class="cmp-driver-name">${info1.name || id1}</span>
-        <span class="cmp-driver-team">${info1.team}</span>
+        <span class="cmp-driver-name">${esc(info1.name || id1)}</span>
+        <span class="cmp-driver-team">${esc(info1.team)}</span>
       </div>
       <div class="cmp-driver-head" style="border-color:${color2}">
         <span class="cmp-driver-color" style="background:${color2}"></span>
-        <span class="cmp-driver-name">${info2.name || id2}</span>
-        <span class="cmp-driver-team">${info2.team}</span>
+        <span class="cmp-driver-name">${esc(info2.name || id2)}</span>
+        <span class="cmp-driver-team">${esc(info2.team)}</span>
       </div>
     </div>
   `;
@@ -221,9 +221,9 @@ function renderComparison(cmp, id1, id2) {
     }
     html += `
       <div class="cmp-stat-row">
-        <span class="cmp-stat-val ${w1 ? 'cmp-winner' : ''}">${v1}</span>
+        <span class="cmp-stat-val ${w1 ? 'cmp-winner' : ''}">${esc(v1)}</span>
         <span class="cmp-stat-label">${stat.label}</span>
-        <span class="cmp-stat-val ${w2 ? 'cmp-winner' : ''}">${v2}</span>
+        <span class="cmp-stat-val ${w2 ? 'cmp-winner' : ''}">${esc(v2)}</span>
       </div>
     `;
   }
@@ -232,10 +232,10 @@ function renderComparison(cmp, id1, id2) {
   // Race-by-race comparison table
   html += '<div class="detail-label" style="margin-top:1.5rem">逐站对比</div>';
   html += '<table class="cmp-race-table"><tr><th>站</th><th>大奖赛</th>';
-  html += `<th style="color:${color1}">${info1.name || id1} 排位</th>`;
-  html += `<th style="color:${color1}">${info1.name || id1} 正赛</th>`;
-  html += `<th style="color:${color2}">${info2.name || id2} 排位</th>`;
-  html += `<th style="color:${color2}">${info2.name || id2} 正赛</th>`;
+  html += `<th style="color:${color1}">${esc(info1.name || id1)} 排位</th>`;
+  html += `<th style="color:${color1}">${esc(info1.name || id1)} 正赛</th>`;
+  html += `<th style="color:${color2}">${esc(info2.name || id2)} 排位</th>`;
+  html += `<th style="color:${color2}">${esc(info2.name || id2)} 正赛</th>`;
   html += '</tr>';
 
   // Build race-by-race map
@@ -258,9 +258,9 @@ function renderComparison(cmp, id1, id2) {
     const g2 = rd.d2?.grid || '-';
     const p2 = rd.d2?.position || '-';
     html += `<tr>
-      <td>R${r}</td><td>${rd.name}</td>
-      <td>P${g1}</td><td>P${p1}</td>
-      <td>P${g2}</td><td>P${p2}</td>
+      <td>R${esc(r)}</td><td>${esc(rd.name)}</td>
+      <td>P${esc(g1)}</td><td>P${esc(p1)}</td>
+      <td>P${esc(g2)}</td><td>P${esc(p2)}</td>
     </tr>`;
   }
   html += '</table>';

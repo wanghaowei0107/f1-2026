@@ -1,8 +1,22 @@
 // js/live.js
 import * as api from './api.js';
+import { esc } from './data.js';
+import { driverHeadshotByNumber, avatarImg } from './avatars.js';
 
+const POLL_INTERVAL = 10000;
 let pollTimer = null;
 let currentSessionKey = null;
+
+// Bound once at module load — never stacks across startPolling() calls.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearInterval(pollTimer);
+    pollTimer = null;
+  } else if (!pollTimer && currentSessionKey) {
+    updatePositions();
+    pollTimer = setInterval(updatePositions, POLL_INTERVAL);
+  }
+});
 
 export async function initLive() {
   try {
@@ -29,7 +43,7 @@ function showLiveBanner(session) {
     <div class="live-header">
       <div class="live-dot"></div>
       <span class="live-label">LIVE</span>
-      <span class="live-session-name">${session.session_name || ''} — ${session.meeting_name || ''}</span>
+      <span class="live-session-name">${esc(session.session_name || '')} — ${esc(session.meeting_name || '')}</span>
       <button class="live-close" onclick="window.__closeLive()">✕</button>
     </div>
     <table class="live-table">
@@ -68,11 +82,12 @@ async function updatePositions() {
       const iv = latestInt[p.driver_number];
       const gap = iv ? (iv.gap_to_leader != null ? `+${iv.gap_to_leader}s` : '-') : '-';
       const lapTime = iv?.lap_time || '-';
+      const avatar = avatarImg(driverHeadshotByNumber(p.driver_number), '', 'live-avatar');
       return `<tr>
-        <td>${p.position}</td>
-        <td>#${p.driver_number}</td>
-        <td>${gap}</td>
-        <td>${lapTime}</td>
+        <td>${esc(p.position)}</td>
+        <td><span class="live-driver-cell">${avatar}<span>#${esc(p.driver_number)}</span></span></td>
+        <td>${esc(gap)}</td>
+        <td>${esc(lapTime)}</td>
       </tr>`;
     }).join('');
   } catch(e) {}
@@ -80,16 +95,7 @@ async function updatePositions() {
 
 function startPolling() {
   updatePositions();
-  pollTimer = setInterval(updatePositions, 10000);
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      clearInterval(pollTimer);
-      pollTimer = null;
-    } else if (!pollTimer && currentSessionKey) {
-      updatePositions();
-      pollTimer = setInterval(updatePositions, 10000);
-    }
-  });
+  pollTimer = setInterval(updatePositions, POLL_INTERVAL);
 }
 
 window.__closeLive = function() {

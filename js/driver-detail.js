@@ -1,4 +1,4 @@
-import { teamColor } from './data.js';
+import { teamColor, esc } from './data.js';
 import * as api from './api.js';
 
 export function initDriverDetail() {
@@ -42,11 +42,11 @@ async function loadDriverDetail(driverId, el) {
       const result = race.Results?.[0];
       if (!result) continue;
       html += `<tr>
-        <td>R${race.round}</td>
-        <td>${race.raceName}</td>
-        <td>${result.grid}</td>
-        <td>P${result.position}</td>
-        <td>${result.points}</td>
+        <td>R${esc(race.round)}</td>
+        <td>${esc(race.raceName)}</td>
+        <td>${esc(result.grid)}</td>
+        <td>P${esc(result.position)}</td>
+        <td>${esc(result.points)}</td>
       </tr>`;
     }
     html += '</table>';
@@ -151,7 +151,7 @@ async function loadConstructorDetail(constructorId, el) {
       s => s.Constructors[0]?.constructorId === constructorId
     ) || [];
 
-    let html = `<div class="detail-label">${team.Constructor.name} · ${currentSeason} 赛季</div>`;
+    let html = `<div class="detail-label">${esc(team.Constructor.name)} · ${currentSeason} 赛季</div>`;
     html += '<div class="constructor-compare">';
     for (const ds of teamDrivers) {
       const d = ds.Driver;
@@ -159,10 +159,10 @@ async function loadConstructorDetail(constructorId, el) {
       html += `<div>
         <div style="font-size:0.9rem;font-weight:500;margin-bottom:4px;">
           <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};margin-right:6px;vertical-align:middle;"></span>
-          ${d.givenName} ${d.familyName}
+          ${esc(d.givenName)} ${esc(d.familyName)}
         </div>
         <div style="font-size:0.8rem;color:var(--muted);">
-          P${ds.position} · ${ds.points} 分 · ${ds.wins} 胜
+          P${esc(ds.position)} · ${esc(ds.points)} 分 · ${esc(ds.wins)} 胜
         </div>
       </div>`;
     }

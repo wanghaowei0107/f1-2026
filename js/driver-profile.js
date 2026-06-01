@@ -1,6 +1,7 @@
 // ─── DRIVER PROFILE (Career History) ──────────────────────────────────────
 import * as api from './api.js';
-import { teamColor, driverFlag } from './data.js';
+import { teamColor, driverFlag, esc } from './data.js';
+import { driverHeadshot, avatarImg } from './avatars.js';
 
 export function initDriverProfile() {
   // Intercept driver row clicks to show enhanced profile
@@ -82,18 +83,23 @@ function renderProfile(el, driverId, currentResults, careerSeasons) {
   const flag = driver ? driverFlag(driver.nationality) : '';
   const name = driver ? `${driver.givenName} ${driver.familyName}` : driverId;
   const nationality = driver?.nationality || '';
+  const headshot = driverHeadshot(driver?.code);
 
   let html = '';
 
   // Profile header
+  const flagBadge = `<span class="profile-avatar avatar-fallback">${flag}</span>`;
   html += `
     <div class="profile-header" style="border-left:3px solid ${color}">
-      <div class="profile-name-row">
-        <span class="profile-flag">${flag}</span>
-        <span class="profile-name">${name}</span>
-        <span class="profile-team" style="color:${color}">${team}</span>
+      ${avatarImg(headshot, flagBadge, 'profile-avatar')}
+      <div class="profile-header-text">
+        <div class="profile-name-row">
+          <span class="profile-flag">${flag}</span>
+          <span class="profile-name">${esc(name)}</span>
+          <span class="profile-team" style="color:${color}">${esc(team)}</span>
+        </div>
+        <div class="profile-meta">${esc(nationality)} · #${esc(driver?.permanentNumber || '-')}</div>
       </div>
-      <div class="profile-meta">${nationality} · #${driver?.permanentNumber || '-'}</div>
     </div>
   `;
 
@@ -134,7 +140,7 @@ function renderProfile(el, driverId, currentResults, careerSeasons) {
       const st = s.stats;
       html += `<tr>
         <td>${s.year}</td>
-        <td>${st.team}</td>
+        <td>${esc(st.team)}</td>
         <td>${st.races}</td>
         <td><strong>${st.totalPoints}</strong></td>
         <td>${st.wins}</td>
@@ -153,11 +159,11 @@ function renderProfile(el, driverId, currentResults, careerSeasons) {
       const r = race.Results?.[0];
       if (!r) continue;
       html += `<tr>
-        <td>R${race.round}</td>
-        <td>${race.raceName}</td>
-        <td>${r.grid}</td>
-        <td>P${r.position}</td>
-        <td>${r.points}</td>
+        <td>R${esc(race.round)}</td>
+        <td>${esc(race.raceName)}</td>
+        <td>${esc(r.grid)}</td>
+        <td>P${esc(r.position)}</td>
+        <td>${esc(r.points)}</td>
       </tr>`;
     }
     html += '</table>';

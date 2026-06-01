@@ -2,7 +2,7 @@
 // All four panels feed off a single getAllResults() call (already memoized in api.js)
 // plus the existing standings call, so no new network volume.
 
-import { teamColor, driverFlag } from './data.js';
+import { teamColor, driverFlag, esc } from './data.js';
 import { getAllResults, getDriverStandings, getConstructorStandings } from './api.js';
 
 let insightsLoaded = false;
@@ -138,15 +138,15 @@ function renderH2H(races, constructors) {
     const hidden = idx >= VISIBLE ? ' h2h-hidden' : '';
     html += `
       <div class="h2h-card${hidden}" style="--team-color:${t.color}">
-        <div class="h2h-team">${teamName}</div>
+        <div class="h2h-team">${esc(teamName)}</div>
         <div class="h2h-names">
           <div class="h2h-name h2h-left">
             <span class="h2h-flag">${a.flag}</span>
-            <span>${a.code}</span>
+            <span>${esc(a.code)}</span>
           </div>
           <div class="h2h-vs">VS</div>
           <div class="h2h-name h2h-right">
-            <span>${b.code}</span>
+            <span>${esc(b.code)}</span>
             <span class="h2h-flag">${b.flag}</span>
           </div>
         </div>
@@ -281,8 +281,8 @@ function moverRow(m, gain) {
     <div class="mover-row">
       <div class="mover-delta mover-${cls}">${sign}${m.delta}</div>
       <div class="mover-body">
-        <div class="mover-code">${m.code}</div>
-        <div class="mover-meta">第 ${String(m.round).padStart(2,'0')} 站 · 发车 ${m.grid} → 完赛 ${m.pos}</div>
+        <div class="mover-code">${esc(m.code)}</div>
+        <div class="mover-meta">第 ${String(m.round).padStart(2,'0')} 站 · 发车 ${esc(m.grid)} → 完赛 ${esc(m.pos)}</div>
       </div>
     </div>
   `;
@@ -295,8 +295,8 @@ function seasonRow(d) {
     <div class="mover-row">
       <div class="mover-delta mover-${cls}">${sign}${d.total}</div>
       <div class="mover-body">
-        <div class="mover-code">${d.code}</div>
-        <div class="mover-meta">${d.name}</div>
+        <div class="mover-code">${esc(d.code)}</div>
+        <div class="mover-meta">${esc(d.name)}</div>
       </div>
       <div class="mover-tick" style="background:${d.color}"></div>
     </div>
@@ -392,8 +392,8 @@ function renderAttrition(races) {
             <div class="attrition-bar" style="width:${pct}%;background:${d.color}"></div>
           </div>
           <div class="attrition-cat dnf-driver">
-            <span class="dnf-code">${d.code}</span>
-            <span class="dnf-name">${d.name}</span>
+            <span class="dnf-code">${esc(d.code)}</span>
+            <span class="dnf-name">${esc(d.name)}</span>
           </div>
           <div class="attrition-count">${d.count}</div>
         </div>
@@ -464,8 +464,8 @@ function renderFastestLaps(races, drivers) {
         <div class="fastest-bar-wrap">
           <div class="fastest-bar" style="width:${pct}%;background:${d.color}"></div>
         </div>
-        <div class="fastest-name">${d.code}</div>
-        <div class="fastest-meta">最佳 ${d.best || '—'}</div>
+        <div class="fastest-name">${esc(d.code)}</div>
+        <div class="fastest-meta">最佳 ${esc(d.best) || '—'}</div>
         <div class="fastest-count">${d.count}</div>
       </div>
     `;
