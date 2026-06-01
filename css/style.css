@@ -88,6 +88,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
@@ -118,6 +119,9 @@ main, header { position: relative; z-index: 1; }
 /* ─── HEADER ────────────────────────────────────────────────────────── */
 header {
   padding: var(--s-5) var(--s-6);
+  padding-top: max(var(--s-5), env(safe-area-inset-top));
+  padding-left: max(var(--s-6), env(safe-area-inset-left));
+  padding-right: max(var(--s-6), env(safe-area-inset-right));
   display: grid;
   grid-template-columns: auto auto 1fr;
   align-items: center;
@@ -209,6 +213,8 @@ header {
 /* ─── MAIN LAYOUT ───────────────────────────────────────────────────── */
 main {
   padding: var(--s-7) var(--s-6) var(--s-9);
+  padding-left: max(var(--s-6), env(safe-area-inset-left));
+  padding-right: max(var(--s-6), env(safe-area-inset-right));
   max-width: 1320px;
   margin: 0 auto;
 }
@@ -872,6 +878,7 @@ main {
   border-top: 1px solid var(--border-strong);
   background: var(--surface-2);
   padding: var(--s-7) 0;
+  padding-bottom: max(var(--s-7), calc(var(--s-5) + env(safe-area-inset-bottom)));
   position: relative;
   z-index: 1;
 }
@@ -887,6 +894,8 @@ main {
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 var(--s-6);
+  padding-left: max(var(--s-6), env(safe-area-inset-left));
+  padding-right: max(var(--s-6), env(safe-area-inset-right));
   display: flex;
   flex-direction: column;
   gap: var(--s-5);
@@ -951,8 +960,18 @@ main {
 
 /* ─── RESPONSIVE ────────────────────────────────────────────────────── */
 @media (max-width: 960px) {
-  main { padding: var(--s-6) var(--s-5) var(--s-8); }
-  header { padding: var(--s-4) var(--s-5); gap: var(--s-3); }
+  main {
+    padding: var(--s-6) var(--s-5) var(--s-8);
+    padding-left: max(var(--s-5), env(safe-area-inset-left));
+    padding-right: max(var(--s-5), env(safe-area-inset-right));
+  }
+  header {
+    padding: var(--s-4) var(--s-5);
+    padding-top: max(var(--s-4), env(safe-area-inset-top));
+    padding-left: max(var(--s-5), env(safe-area-inset-left));
+    padding-right: max(var(--s-5), env(safe-area-inset-right));
+    gap: var(--s-3);
+  }
   .two-col { grid-template-columns: 1fr; gap: var(--s-7); margin-top: var(--s-7); padding-top: var(--s-6); }
 }
 @media (max-width: 640px) {
@@ -963,7 +982,11 @@ main {
   .season-badge { display: none; }
   .header-right { gap: var(--s-3); }
   .last-update { display: none; }
-  main { padding: var(--s-5) var(--s-4) var(--s-7); }
+  main {
+    padding: var(--s-5) var(--s-4) var(--s-7);
+    padding-left: max(var(--s-4), env(safe-area-inset-left));
+    padding-right: max(var(--s-4), env(safe-area-inset-right));
+  }
   .next-race-block { padding: var(--s-5) 0; }
   .countdown-row { gap: var(--s-5); }
   .cd-unit:not(:last-child)::after { right: -1rem; font-size: 2rem; }
