@@ -78,7 +78,7 @@ export class ReplayChart {
 
       // Position label
       ctx.fillStyle = textColor;
-      ctx.font = '10px DM Sans';
+      ctx.font = '10px Archivo';
       ctx.textAlign = 'right';
       ctx.fillText(i.toString(), pad.left - 8, y + 3);
     }
@@ -88,7 +88,7 @@ export class ReplayChart {
     ctx.translate(12, pad.top + plotH / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillStyle = textColor;
-    ctx.font = '10px DM Sans';
+    ctx.font = '10px Archivo';
     ctx.textAlign = 'center';
     ctx.fillText('位置', 0, 0);
     ctx.restore();
@@ -99,14 +99,14 @@ export class ReplayChart {
     for (let lap = 1; lap <= this.currentLap; lap += lapStep) {
       const x = pad.left + (plotW * (lap - 1) / (this.maxLap - 1));
       ctx.fillStyle = textColor;
-      ctx.font = '10px DM Sans';
+      ctx.font = '10px Archivo';
       ctx.fillText('L' + lap, x, H - pad.bottom + 16);
     }
     // Always show current lap
     if (this.currentLap > 1) {
       const cx = pad.left + (plotW * (this.currentLap - 1) / (this.maxLap - 1));
       ctx.fillStyle = textColor;
-      ctx.font = '10px DM Sans';
+      ctx.font = '10px Archivo';
       ctx.fillText('L' + this.currentLap, cx, H - pad.bottom + 16);
     }
 
@@ -151,7 +151,7 @@ export class ReplayChart {
         const labelX = lastX + 6;
         const labelY = lastY + 3;
         ctx.fillStyle = isOther ? 'rgba(128,128,128,0.3)' : (isDark ? '#ccc' : '#333');
-        ctx.font = isHighlighted ? 'bold 10px DM Sans' : '9px DM Sans';
+        ctx.font = isHighlighted ? 'bold 10px Archivo' : '9px Archivo';
         ctx.textAlign = 'left';
         ctx.fillText(driver.code || num, labelX, labelY);
       }
@@ -172,7 +172,7 @@ export class ReplayChart {
 
     // Lap counter
     ctx.fillStyle = isDark ? '#ccc' : '#333';
-    ctx.font = 'bold 12px DM Sans';
+    ctx.font = 'bold 12px Archivo';
     ctx.textAlign = 'center';
     ctx.fillText(`Lap ${this.currentLap} / ${this.maxLap}`, W / 2, H - 6);
   }

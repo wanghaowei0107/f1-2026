@@ -30,14 +30,14 @@ export async function toggleCompare() {
   if (compareYear) {
     compareYear = null;
     drawChart(getChartMode(), currentSeason);
-    document.getElementById('compare-btn').textContent = 'Compare 对比';
+    document.getElementById('compare-btn').textContent = '跨赛季对比';
     return;
   }
   compareYear = currentSeason === 2026 ? 2025 : 2026;
   try {
     const compareChartData = await loadChartData(compareYear);
     drawChart(getChartMode(), currentSeason, compareChartData);
-    document.getElementById('compare-btn').textContent = `vs ${compareYear} ✕`;
+    document.getElementById('compare-btn').textContent = `${compareYear} 对比中 ✕`;
   } catch(e) { compareYear = null; }
 }
 

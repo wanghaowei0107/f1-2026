@@ -208,12 +208,12 @@ function drawProfileChart(driverId, raceResults) {
   for (let i = 0; i <= 3; i++) {
     const y = pad.top + plotH - (plotH * i / 3);
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
-    ctx.fillStyle = textColor; ctx.font = '9px DM Sans'; ctx.textAlign = 'right';
+    ctx.fillStyle = textColor; ctx.font = '9px Archivo'; ctx.textAlign = 'right';
     ctx.fillText(Math.round(maxPts * i / 3), pad.left - 4, y + 3);
   }
 
   // X labels
-  ctx.textAlign = 'center'; ctx.font = '9px DM Sans'; ctx.fillStyle = textColor;
+  ctx.textAlign = 'center'; ctx.font = '9px Archivo'; ctx.fillStyle = textColor;
   rounds.forEach((label, i) => {
     const x = pad.left + (plotW * i / (rounds.length - 1 || 1));
     ctx.fillText(label, x, H - pad.bottom + 14);
@@ -234,6 +234,6 @@ function drawProfileChart(driverId, raceResults) {
   const lx = pad.left + plotW;
   const ly = pad.top + plotH - (plotH * lastPts / maxPts);
   ctx.beginPath(); ctx.arc(lx, ly, 3, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill();
-  ctx.fillStyle = isDark ? '#ccc' : '#333'; ctx.font = '10px DM Sans'; ctx.textAlign = 'left';
+  ctx.fillStyle = isDark ? '#ccc' : '#333'; ctx.font = '10px Archivo'; ctx.textAlign = 'left';
   ctx.fillText(lastPts, lx + 6, ly + 3);
 }

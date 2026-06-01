@@ -100,7 +100,7 @@ function appendShowMore(container, hiddenCount) {
   btn.dataset.expanded = '0';
   const setLabel = () => {
     const expanded = btn.dataset.expanded === '1';
-    btn.textContent = expanded ? 'Show fewer' : `Show remaining ${hiddenCount}`;
+    btn.textContent = expanded ? '收起' : `展开剩余 ${hiddenCount} 位 →`;
   };
   setLabel();
   btn.addEventListener('click', () => {
@@ -137,7 +137,7 @@ export async function loadStandings(year, force) {
     if (list) {
       renderDrivers(list.DriverStandings);
       document.getElementById('last-update').textContent =
-        `积分更新至第${list.round}站 · ${new Date().toLocaleDateString('zh-CN')}`;
+        `已更新至第 ${list.round} 站 · ${new Date().toLocaleDateString('zh-CN')}`;
     }
   } catch(e) {
     document.getElementById('standings-drivers').innerHTML =

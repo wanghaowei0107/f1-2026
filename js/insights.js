@@ -150,17 +150,17 @@ function renderH2H(races, constructors) {
             <span class="h2h-flag">${b.flag}</span>
           </div>
         </div>
-        ${h2hBar('Qualifying', qWinA, qWinB)}
-        ${h2hBar('Race finish', rWinA, rWinB)}
+        ${h2hBar('排位赛', qWinA, qWinB)}
+        ${h2hBar('正赛名次', rWinA, rWinB)}
         <div class="h2h-stats">
           <div class="h2h-stat-col">
             <div class="h2h-stat-num">${a.racePts}</div>
-            <div class="h2h-stat-num h2h-stat-sub">avg Q ${avgQA} · F ${avgFA}</div>
+            <div class="h2h-stat-num h2h-stat-sub">均排 ${avgQA} · 均完 ${avgFA}</div>
           </div>
-          <div class="h2h-stat-label">PTS · AVG</div>
+          <div class="h2h-stat-label">积分 · 平均</div>
           <div class="h2h-stat-col">
             <div class="h2h-stat-num">${b.racePts}</div>
-            <div class="h2h-stat-num h2h-stat-sub">avg Q ${avgQB} · F ${avgFB}</div>
+            <div class="h2h-stat-num h2h-stat-sub">均排 ${avgQB} · 均完 ${avgFB}</div>
           </div>
         </div>
       </div>
@@ -168,7 +168,7 @@ function renderH2H(races, constructors) {
   });
 
   if (ordered.length > VISIBLE) {
-    html += `<button class="show-more-btn h2h-toggle" data-expanded="0">Show remaining ${ordered.length - VISIBLE} teams</button>`;
+    html += `<button class="show-more-btn h2h-toggle" data-expanded="0">展开剩余 ${ordered.length - VISIBLE} 支车队 →</button>`;
   }
   el.innerHTML = html;
 
@@ -179,8 +179,8 @@ function renderH2H(races, constructors) {
       el.querySelectorAll('.h2h-hidden').forEach(c => c.classList.toggle('h2h-hidden-show', !expanded));
       toggle.dataset.expanded = expanded ? '0' : '1';
       toggle.textContent = expanded
-        ? `Show remaining ${ordered.length - VISIBLE} teams`
-        : 'Show fewer';
+        ? `展开剩余 ${ordered.length - VISIBLE} 支车队 →`
+        : '收起';
     });
   }
 }
@@ -251,22 +251,22 @@ function renderMovers(races) {
   let html = `
     <div class="movers-grid">
       <div class="movers-col">
-        <div class="movers-sub">Best single race</div>
+        <div class="movers-sub">单场最大涨幅</div>
         ${topGains.map(m => moverRow(m, true)).join('')}
       </div>
       <div class="movers-col">
-        <div class="movers-sub">Worst single race</div>
+        <div class="movers-sub">单场最大跌幅</div>
         ${topLosses.map(m => moverRow(m, false)).join('')}
       </div>
     </div>
     <div class="movers-divider"></div>
     <div class="movers-grid">
       <div class="movers-col">
-        <div class="movers-sub">Season net gain</div>
+        <div class="movers-sub">赛季累计净涨</div>
         ${seasonTop.map(d => seasonRow(d)).join('')}
       </div>
       <div class="movers-col">
-        <div class="movers-sub">Season net loss</div>
+        <div class="movers-sub">赛季累计净跌</div>
         ${seasonBot.map(d => seasonRow(d)).join('')}
       </div>
     </div>
@@ -282,7 +282,7 @@ function moverRow(m, gain) {
       <div class="mover-delta mover-${cls}">${sign}${m.delta}</div>
       <div class="mover-body">
         <div class="mover-code">${m.code}</div>
-        <div class="mover-meta">R${String(m.round).padStart(2,'0')} · grid ${m.grid} → P${m.pos}</div>
+        <div class="mover-meta">第 ${String(m.round).padStart(2,'0')} 站 · 发车 ${m.grid} → 完赛 ${m.pos}</div>
       </div>
     </div>
   `;
@@ -343,8 +343,17 @@ function renderAttrition(races) {
     .map(k => [k, statusBuckets[k]])
     .concat(Object.entries(statusBuckets).filter(([k]) => !order.includes(k)));
 
+  const labelMap = {
+    'Finished': '完赛',
+    'Lapped': '被套圈',
+    'Retired': '退赛',
+    'Disqualified': '取消成绩',
+    'Withdrawn': '退出',
+    'DNS': '未发车',
+    'DNQ': '未通过排位',
+  };
   let html = `
-    <div class="attrition-meta">${total} entries across ${races.length} races</div>
+    <div class="attrition-meta">本赛季 ${races.length} 站 · 共 ${total} 人次出场</div>
     <div class="attrition-list">
   `;
   for (const [cat, count] of sorted) {
@@ -355,7 +364,7 @@ function renderAttrition(races) {
         <div class="attrition-bar-wrap">
           <div class="attrition-bar${isDNF ? ' attrition-bar-dnf' : ''}" style="width:${pct}%"></div>
         </div>
-        <div class="attrition-cat">${cat}</div>
+        <div class="attrition-cat">${labelMap[cat] || cat}</div>
         <div class="attrition-count">${count} <span class="attrition-pct">${pct.toFixed(0)}%</span></div>
       </div>
     `;
@@ -371,7 +380,7 @@ function renderAttrition(races) {
   if (dnfList.length) {
     html += `
       <div class="attrition-divider"></div>
-      <div class="movers-sub">DNF leaderboard</div>
+      <div class="movers-sub">退赛榜</div>
       <div class="attrition-list">
     `;
     const max = dnfList[0].count;
@@ -444,7 +453,7 @@ function renderFastestLaps(races, drivers) {
 
   const max = sorted[0].count;
   let html = `
-    <div class="attrition-meta">${totalFL} fastest laps awarded · ${sorted.length} different drivers</div>
+    <div class="attrition-meta">本赛季共有 ${totalFL} 个最快圈 · ${sorted.length} 位车手分享</div>
     <div class="fastest-list">
   `;
   sorted.forEach((d, i) => {
@@ -456,7 +465,7 @@ function renderFastestLaps(races, drivers) {
           <div class="fastest-bar" style="width:${pct}%;background:${d.color}"></div>
         </div>
         <div class="fastest-name">${d.code}</div>
-        <div class="fastest-meta">best ${d.best || '—'}</div>
+        <div class="fastest-meta">最佳 ${d.best || '—'}</div>
         <div class="fastest-count">${d.count}</div>
       </div>
     `;

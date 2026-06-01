@@ -36,11 +36,10 @@ export function buildSchedule(raceList, onRaceClick) {
     document.getElementById('nr-name').textContent = nextRace.name;
     const sd = new Date(nextRace.date);
     const ed = new Date(nextRace.end);
-    const monStr = sd.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
     document.getElementById('nr-date').textContent =
-      `${monStr} ${sd.getDate()}—${ed.getDate()} · ${nextRace.flag}`;
+      `${sd.getMonth()+1} 月 ${sd.getDate()} — ${ed.getDate()} 日 · ${nextRace.flag}`;
     const roundEl = document.getElementById('nr-round');
-    if (roundEl) roundEl.textContent = `Round ${String(nextRace.r).padStart(2,'0')}`;
+    if (roundEl) roundEl.textContent = `第 ${String(nextRace.r).padStart(2,'0')} 站`;
     const issueEl = document.getElementById('ft-issue');
     if (issueEl) issueEl.textContent = String(nextRace.r).padStart(2,'0');
     startCountdown(new Date(nextRace.date + 'T06:00:00Z'));
@@ -58,15 +57,15 @@ export function buildSchedule(raceList, onRaceClick) {
     div.className = 'race-row' + (isPast && !rc.cancelled ? ' is-past' : '') + (!rc.cancelled ? ' clickable' : '') + (isNext ? ' is-next' : '');
 
     const d = new Date(rc.date);
-    const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toUpperCase();
+    const dateStr = `${d.getMonth()+1}月${d.getDate()}日`;
 
     let statusHtml = '';
     if (rc.cancelled) {
-      statusHtml = '<span class="status-pill status-cancelled">Cancelled</span>';
+      statusHtml = '<span class="status-pill status-cancelled">已取消</span>';
     } else if (isPast) {
-      statusHtml = '<span class="status-pill status-done">Done</span>';
+      statusHtml = '<span class="status-pill status-done">已完赛</span>';
     } else if (isNext) {
-      statusHtml = '<span class="status-pill status-next">Next</span>';
+      statusHtml = '<span class="status-pill status-next">下一站</span>';
     }
 
     div.innerHTML = `
@@ -75,7 +74,7 @@ export function buildSchedule(raceList, onRaceClick) {
       <div>
         <div class="rr-name">${rc.name}</div>
       </div>
-      ${rc.sprint ? '<span class="sprint-pill">Sprint</span>' : '<span></span>'}
+      ${rc.sprint ? '<span class="sprint-pill">冲刺赛</span>' : '<span></span>'}
       <div style="display:flex;align-items:center;gap:10px;">
         <span class="rr-date">${dateStr}</span>
         ${statusHtml}

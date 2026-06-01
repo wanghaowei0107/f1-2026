@@ -12,7 +12,8 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=Archivo+Narrow:wght@500;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/components.css">
 </head>
@@ -20,7 +21,7 @@
 
 <header>
   <div class="logo-text">F<span>1</span> 赛季</div>
-  <div class="season-badge">2026 EDITION</div>
+  <div class="season-badge">2026 赛季 · F1 周刊</div>
   <div class="header-right">
     <select id="season-select" onchange="switchSeason(this.value)" aria-label="选择赛季">
       <option value="2026" selected>2026</option>
@@ -44,69 +45,69 @@
 
     <div class="next-race-block">
       <div class="nr-meta">
-        <span class="nr-label">Next Up · 下一站</span>
+        <span class="nr-label">下一站 · Next Up</span>
         <span class="nr-round" id="nr-round"></span>
       </div>
       <div class="nr-name" id="nr-name">加载中</div>
       <div class="nr-date" id="nr-date"></div>
       <div class="countdown-row">
-        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Days</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Hrs</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Min</div></div>
-        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Sec</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">天</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">时</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">分</div></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">秒</div></div>
       </div>
     </div>
 
     <div class="two-col">
 
       <div class="col-standings">
-        <h2 class="section-title">Standings</h2>
+        <h2 class="section-title">积分榜</h2>
         <div class="standings-tabs">
-          <button class="s-tab active" onclick="showStandings('drivers', this)">Drivers</button>
-          <button class="s-tab" onclick="showStandings('constructors', this)">Constructors</button>
-          <button class="refresh-btn" onclick="loadStandings(true)"><span class="refresh-glyph">↻</span> Refresh</button>
+          <button class="s-tab active" onclick="showStandings('drivers', this)">车手</button>
+          <button class="s-tab" onclick="showStandings('constructors', this)">车队</button>
+          <button class="refresh-btn" onclick="loadStandings(true)"><span class="refresh-glyph">↻</span> 刷新</button>
         </div>
         <div id="standings-drivers" class="standings-list">
-          <div class="loading">从 Jolpica API 加载中</div>
+          <div class="loading">加载中</div>
         </div>
         <div id="standings-constructors" class="standings-list" style="display:none">
-          <div class="loading">从 Jolpica API 加载中</div>
+          <div class="loading">加载中</div>
         </div>
       </div>
 
       <div class="col-schedule">
         <div class="col-head">
-          <h2 class="section-title">Calendar</h2>
-          <button class="ics-btn" onclick="exportICS()"><span class="refresh-glyph">↓</span> Export .ics</button>
+          <h2 class="section-title">赛程</h2>
+          <button class="ics-btn" onclick="exportICS()"><span class="refresh-glyph">↓</span> 导出日历</button>
         </div>
         <div class="schedule-list" id="schedule-list">
-          <div class="loading">加载赛程中</div>
+          <div class="loading">加载中</div>
         </div>
       </div>
 
     </div>
 
     <section class="chart-container">
-      <div class="chart-eyebrow">Exhibit 01 — 积分进程</div>
+      <div class="chart-eyebrow">专栏 01 · 积分进程</div>
       <div class="chart-header">
-        <h2 class="section-title">Points Progression</h2>
+        <h2 class="section-title">积分趋势</h2>
         <div class="chart-tabs">
-          <button class="s-tab active" onclick="drawChart('drivers', this)">Top 8 Drivers</button>
-          <button class="s-tab" onclick="drawChart('constructors', this)">Constructors</button>
-          <button class="s-tab" id="compare-btn" onclick="toggleCompare()">Compare 对比</button>
+          <button class="s-tab active" onclick="drawChart('drivers', this)">车手 Top 8</button>
+          <button class="s-tab" onclick="drawChart('constructors', this)">车队</button>
+          <button class="s-tab" id="compare-btn" onclick="toggleCompare()">跨赛季对比</button>
         </div>
       </div>
       <canvas class="chart-canvas" id="chart-canvas"></canvas>
     </section>
 
     <section class="insight-section">
-      <div class="chart-eyebrow">Exhibit 02 — 数据深读</div>
-      <h2 class="section-title">By the Numbers</h2>
+      <div class="chart-eyebrow">专栏 02 · 数据深读</div>
+      <h2 class="section-title">赛季速写</h2>
       <div class="insight-grid">
         <article class="insight-card">
           <div class="insight-head">
             <span class="insight-num">01</span>
-            <h3 class="insight-title">Head-to-Head <span class="insight-sub">队友对决</span></h3>
+            <h3 class="insight-title">队友对决 <span class="insight-sub">Head-to-Head</span></h3>
           </div>
           <div class="insight-body" id="insight-h2h">
             <div class="loading">加载中</div>
@@ -116,7 +117,7 @@
         <article class="insight-card">
           <div class="insight-head">
             <span class="insight-num">02</span>
-            <h3 class="insight-title">Movers &amp; Shakers <span class="insight-sub">起跑得失</span></h3>
+            <h3 class="insight-title">起跑得失位 <span class="insight-sub">Movers &amp; Shakers</span></h3>
           </div>
           <div class="insight-body" id="insight-movers">
             <div class="loading">加载中</div>
@@ -126,7 +127,7 @@
         <article class="insight-card">
           <div class="insight-head">
             <span class="insight-num">03</span>
-            <h3 class="insight-title">Attrition Report <span class="insight-sub">退赛原因</span></h3>
+            <h3 class="insight-title">退赛构成 <span class="insight-sub">Attrition Report</span></h3>
           </div>
           <div class="insight-body" id="insight-attrition">
             <div class="loading">加载中</div>
@@ -136,7 +137,7 @@
         <article class="insight-card">
           <div class="insight-head">
             <span class="insight-num">04</span>
-            <h3 class="insight-title">Fastest Laps <span class="insight-sub">单圈奖杯</span></h3>
+            <h3 class="insight-title">单圈奖杯 <span class="insight-sub">Fastest Laps</span></h3>
           </div>
           <div class="insight-body" id="insight-fastest">
             <div class="loading">加载中</div>
@@ -154,18 +155,18 @@
     <div class="ft-row ft-row-top">
       <div class="ft-mark">
         <span class="ft-logo">F<span>1</span></span>
-        <span class="ft-tag">Season 2026 Edition</span>
+        <span class="ft-tag">2026 赛季 · 静态周刊</span>
       </div>
-      <div class="ft-meta">No. <span id="ft-issue">01</span> · 静态周刊 · Made for the paddock</div>
+      <div class="ft-meta">第 <span id="ft-issue">01</span> 期 · 围场出品 · Made for the paddock</div>
     </div>
     <div class="ft-row ft-row-bot">
       <div class="ft-credits">
-        Data · <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica</a>
+        数据来源 · <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Jolpica</a>
         · <a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a>
         · <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
       </div>
       <div class="ft-colophon">
-        Set in <em>Bebas Neue</em> &amp; <em>DM Sans</em>. Hand-built, no framework.
+        排版字体 <em>Archivo</em> &amp; <em>思源黑体</em>，纯手工搭建，零框架依赖
       </div>
     </div>
   </div>

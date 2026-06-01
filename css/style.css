@@ -43,8 +43,8 @@
   --s-9: 6rem;
 
   /* Type */
-  --font-display: 'Bebas Neue', 'Helvetica Neue', sans-serif;
-  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Archivo Narrow', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body: 'Archivo', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 
   /* Radius (used sparingly — editorial = sharp edges) */
   --r-1: 2px;
@@ -84,9 +84,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   font-feature-settings: 'kern' 1, 'liga' 1;
@@ -137,9 +137,10 @@ header {
 .season-badge {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--muted);
   border-left: 1px solid var(--border-strong);
   padding-left: var(--s-4);
@@ -159,7 +160,6 @@ header {
   font-size: 0.7rem !important;
   font-weight: 500 !important;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   background: transparent !important;
   color: var(--text) !important;
   border: none !important;
@@ -178,11 +178,10 @@ header {
 }
 #season-select:hover, #season-select:focus { border-bottom-color: var(--red) !important; outline: none; }
 .last-update {
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   color: var(--muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }
 .theme-toggle {
   background: none;
@@ -203,7 +202,6 @@ header {
   color: var(--paper) !important;
   font-size: 0.7rem !important;
   letter-spacing: 0.15em;
-  text-transform: uppercase;
   font-weight: 500;
   padding: 10px 16px !important;
 }
@@ -218,23 +216,25 @@ main {
 /* Editorial section header — eyebrow + rule */
 .section-title {
   font-family: var(--font-display);
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--text);
   margin: 0;
   position: relative;
   display: inline-flex;
   align-items: baseline;
   gap: var(--s-3);
+  line-height: 1;
 }
 .section-title::before {
   content: '';
   display: inline-block;
   width: 28px;
-  height: 3px;
+  height: 4px;
   background: var(--red);
   position: relative;
-  top: -4px;
+  top: -6px;
 }
 
 /* Two-column grid */
@@ -276,11 +276,10 @@ main {
 }
 .nr-label {
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
   color: var(--red);
-  font-weight: 500;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: var(--s-3);
@@ -289,35 +288,36 @@ main {
 .nr-label::before {
   content: '';
   display: inline-block;
-  width: 6px; height: 6px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--red);
   animation: livePulse 2s ease-in-out infinite;
 }
 .nr-round {
   font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--ink-3);
   padding-left: var(--s-4);
   border-left: 1px solid var(--border-strong);
 }
 .nr-name {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 7rem);
+  font-size: clamp(2.6rem, 8vw, 5.6rem);
+  font-weight: 700;
   letter-spacing: 0.005em;
-  line-height: 0.92;
+  line-height: 1;
   color: var(--text);
   margin-bottom: var(--s-3);
-  text-transform: uppercase;
   word-break: break-word;
 }
 .nr-date {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--muted);
   margin-bottom: var(--s-6);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   font-weight: 400;
 }
 .countdown-row {
@@ -350,7 +350,8 @@ main {
 }
 .cd-num {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1;
   color: var(--text);
@@ -358,10 +359,9 @@ main {
   transition: color 0.3s var(--ease);
 }
 .cd-label {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   color: var(--muted);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
   font-weight: 500;
   margin-top: var(--s-2);
 }
@@ -387,10 +387,9 @@ main {
 }
 .s-tab {
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   padding: 0;
   background: none;
   border: none;
@@ -412,9 +411,8 @@ main {
   background: var(--red);
 }
 .refresh-btn {
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   font-weight: 500;
   background: none;
   border: none;
@@ -471,10 +469,10 @@ main {
 
 .st-pos {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.65rem;
+  font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--ink-4);
-  font-weight: 400;
   text-align: left;
   line-height: 1;
 }
@@ -485,18 +483,17 @@ main {
 .st-flag { font-size: 1.05rem; line-height: 1; }
 .st-name {
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--text);
   letter-spacing: 0.005em;
 }
 .st-team {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   color: var(--muted);
   margin-top: 3px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }
 .bar-track {
   height: 2px;
@@ -511,8 +508,8 @@ main {
 }
 .st-pts {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 400;
+  font-size: 1.55rem;
+  font-weight: 700;
   text-align: right;
   letter-spacing: 0.02em;
   color: var(--text);
@@ -526,16 +523,15 @@ main {
 }
 
 /* TOP 3 emphasis */
-.driver-row.top-3 .st-pos, .cons-row.top-3 .st-pos { font-size: 1.85rem; }
-.driver-row.top-3 .st-name, .cons-row.top-3 .st-name { font-size: 1.05rem; font-weight: 500; }
-.driver-row.top-3 .st-pts, .cons-row.top-3 .st-pts { font-size: 1.7rem; }
+.driver-row.top-3 .st-pos, .cons-row.top-3 .st-pos { font-size: 2rem; }
+.driver-row.top-3 .st-name, .cons-row.top-3 .st-name { font-size: 1.1rem; font-weight: 600; }
+.driver-row.top-3 .st-pts, .cons-row.top-3 .st-pts { font-size: 1.85rem; }
 
 /* Show more */
 .show-more-btn {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
   font-weight: 500;
   background: none;
   border: none;
@@ -604,53 +600,49 @@ main {
 
 .rr-round {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--ink-3);
-  letter-spacing: 0.04em;
-  font-weight: 400;
+  letter-spacing: 0.02em;
   line-height: 1;
 }
-.rr-flag { font-size: 1.05rem; line-height: 1; }
+.rr-flag { font-size: 1.15rem; line-height: 1; }
 .rr-name {
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--text);
   letter-spacing: 0.005em;
 }
 .rr-date {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--muted);
   white-space: nowrap;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   font-weight: 500;
 }
 .sprint-pill {
   font-family: var(--font-body);
-  font-size: 0.58rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   background: none;
   color: var(--warning);
-  padding: 2px 0;
+  padding: 2px 0 2px 6px;
   border-radius: 0;
   border-left: 1px solid var(--warning);
-  padding-left: 6px;
   white-space: nowrap;
 }
 .status-pill {
   font-family: var(--font-body);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   padding: 0;
   border-radius: 0;
   white-space: nowrap;
 }
 .status-done { background: none; color: var(--ink-4); }
-.status-next { background: none; color: var(--red); position: relative; padding-left: 14px; }
+.status-next { background: none; color: var(--red); position: relative; padding-left: 14px; font-weight: 600; }
 .status-next::before {
   content: '';
   position: absolute;
@@ -666,9 +658,8 @@ main {
 /* ICS button — minimal text-link */
 .ics-btn {
   font-family: var(--font-body);
-  font-size: 0.65rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   font-weight: 500;
   background: none;
   border: none;
@@ -707,11 +698,10 @@ main {
 .detail-section:last-child { margin-bottom: 0; }
 .detail-label {
   font-family: var(--font-body);
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   color: var(--red);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--s-3);
 }
 .result-table {
@@ -723,7 +713,6 @@ main {
   text-align: left;
   font-size: 0.58rem;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-4);
   font-weight: 500;
   padding: 6px 8px 6px 0;
@@ -756,7 +745,6 @@ main {
   font-size: 0.78rem;
   padding: var(--s-5) 0;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   font-weight: 500;
 }
 .error-msg {
@@ -791,9 +779,8 @@ main {
 }
 .chart-eyebrow {
   font-family: var(--font-body);
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   color: var(--muted);
   font-weight: 500;
   margin-bottom: var(--s-3);
@@ -897,7 +884,6 @@ main {
   font-family: var(--font-body);
   font-size: 0.65rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--muted);
   font-weight: 500;
 }

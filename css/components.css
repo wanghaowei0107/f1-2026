@@ -27,11 +27,9 @@
   font-family: var(--font-display);
   font-size: 1rem; letter-spacing: 0.16em;
   color: var(--red);
-  text-transform: uppercase;
 }
 .live-session-name {
   font-size: 0.72rem; color: var(--muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
   font-weight: 500;
 }
 .live-close {
@@ -45,7 +43,6 @@
 }
 .live-table th {
   text-align: left;
-  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-4); font-weight: 500;
   padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
@@ -83,11 +80,9 @@
 .cmp-title {
   font-family: var(--font-display);
   font-size: 1.2rem; letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 .cmp-close-btn {
   font-size: 0.65rem; letter-spacing: 0.16em; font-weight: 500;
-  text-transform: uppercase;
   background: none; border: none;
   color: var(--ink-4);
   padding: 0;
@@ -116,7 +111,6 @@
 }
 .cmp-go-btn {
   font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
-  text-transform: uppercase;
   background: var(--red); color: #fff;
   border: 1px solid var(--red);
   padding: 8px 18px; border-radius: 0;
@@ -145,11 +139,9 @@
   font-family: var(--font-display);
   font-size: 1.2rem; font-weight: 400;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 .cmp-driver-team {
   font-size: 0.65rem; color: var(--muted);
-  letter-spacing: 0.12em; text-transform: uppercase;
   font-weight: 500;
 }
 .cmp-stats-rows { margin-bottom: var(--s-4); }
@@ -171,7 +163,6 @@
   color: var(--red);
 }
 .cmp-stat-label {
-  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--ink-4); font-weight: 500;
   padding: 0 var(--s-4); text-align: center; min-width: 90px;
   font-family: var(--font-body);
@@ -182,7 +173,6 @@
 }
 .cmp-race-table th {
   text-align: left; font-size: 0.56rem; letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-4); font-weight: 500;
   padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
@@ -217,18 +207,15 @@
   font-size: 1.6rem;
   letter-spacing: 0.04em;
   line-height: 1;
-  text-transform: uppercase;
 }
 .profile-team {
   font-size: 0.7rem; font-weight: 500;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 .profile-meta {
   font-size: 0.65rem; color: var(--muted);
   margin-top: 6px;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   font-weight: 500;
 }
 .profile-stats-grid {
@@ -256,7 +243,6 @@
 .profile-stat-label {
   font-size: 0.58rem; color: var(--muted);
   letter-spacing: 0.16em;
-  text-transform: uppercase;
   margin-top: 6px;
   font-weight: 500;
 }
@@ -286,7 +272,6 @@
   background: var(--red);
 }
 .driver-detail-panel .detail-label {
-  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--red); font-weight: 500; margin-bottom: var(--s-3);
 }
 .driver-detail-tabs {
@@ -302,7 +287,6 @@
 }
 .driver-season-table th {
   text-align: left; font-size: 0.58rem; letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-4); font-weight: 500;
   padding: 6px 8px 6px 0; border-bottom: 1px solid var(--border-strong);
 }
@@ -330,7 +314,6 @@
 .circuit-svg-container svg { max-width: 100%; max-height: 100%; }
 .circuit-svg-container .no-circuit {
   font-size: 0.7rem; color: var(--muted);
-  letter-spacing: 0.12em; text-transform: uppercase;
 }
 
 /* ─── WEATHER ───────────────────────────────────────────────────────── */
@@ -360,7 +343,6 @@
 .weather-day:last-child { border-right: none; }
 .weather-day-label {
   font-size: 0.58rem; color: var(--muted);
-  letter-spacing: 0.16em; text-transform: uppercase;
   margin-bottom: 6px; font-weight: 500;
 }
 .weather-day-icon { font-size: 1.5rem; margin-bottom: 4px; }
@@ -417,7 +399,6 @@
   font-family: var(--font-body);
   font-size: 0.65rem; font-weight: 500;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-2);
   background: none;
   border: none;
@@ -450,12 +431,10 @@
   margin-bottom: var(--s-3);
 }
 .replay-header .detail-label {
-  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--red); font-weight: 500;
 }
 .replay-session-name {
   font-size: 0.7rem; color: var(--muted);
-  letter-spacing: 0.1em; text-transform: uppercase;
 }
 .replay-canvas {
   width: 100%; height: 300px;
@@ -515,7 +494,6 @@
   font-family: var(--font-body);
   font-size: 0.62rem; font-weight: 500;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   background: none; color: var(--ink-2);
   border: 1px solid var(--border-strong);
   border-radius: 0;
@@ -544,14 +522,12 @@
   margin-bottom: var(--s-3);
 }
 .onboard-header .detail-label {
-  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--red); font-weight: 500;
 }
 .onboard-status {
   display: flex; align-items: center; gap: 6px;
   font-size: 0.65rem; color: var(--red); font-weight: 500;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 .onboard-video {
   position: relative;
@@ -583,7 +559,6 @@
   display: flex; gap: var(--s-4);
   flex-wrap: wrap;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   font-weight: 500;
 }
 .circuit-info span { white-space: nowrap; }
@@ -612,7 +587,6 @@
   display: block;
   font-size: 0.6rem;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
   margin-bottom: 3px;
 }
 
@@ -673,7 +647,6 @@
   letter-spacing: 0.06em;
   color: var(--text);
   font-weight: 400;
-  text-transform: uppercase;
   margin: 0;
 }
 .insight-sub {
@@ -701,7 +674,6 @@
   font-family: var(--font-body);
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   font-weight: 500;
   background: none;
   border: none;
@@ -731,7 +703,6 @@
   font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--team-color, var(--ink-3));
   margin-bottom: 6px;
 }
@@ -765,7 +736,6 @@
 .h2h-bar-label {
   font-size: 0.55rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--ink-4);
   margin-bottom: 4px;
   font-weight: 500;
@@ -833,7 +803,6 @@
   font-family: var(--font-body);
   font-size: 0.55rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--ink-4);
   font-weight: 500;
 }
@@ -854,7 +823,6 @@
   font-family: var(--font-body);
   font-size: 0.55rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--ink-4);
   font-weight: 500;
   margin-bottom: var(--s-2);
@@ -905,7 +873,6 @@
   font-size: 0.65rem;
   color: var(--muted);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   font-weight: 500;
   margin-bottom: var(--s-3);
 }

@@ -115,7 +115,7 @@ export async function drawChart(mode, year, compareData) {
   const gridColor = isDark ? 'rgba(242,238,229,0.06)' : 'rgba(31,27,22,0.06)';
   const axisColor = isDark ? 'rgba(242,238,229,0.18)' : 'rgba(31,27,22,0.18)';
   const textColor = isDark ? '#8A8377' : '#7A7368';
-  const labelFont = "10px 'DM Sans', sans-serif";
+  const labelFont = "10px 'Archivo', sans-serif";
   ctx.strokeStyle = gridColor;
   ctx.lineWidth = 1;
   const gridLines = 5;
@@ -163,7 +163,7 @@ export async function drawChart(mode, year, compareData) {
     const ly = pad.top + plotH - (plotH * lastPts / maxPts);
     ctx.beginPath(); ctx.arc(lx, ly, 2.5, 0, Math.PI * 2); ctx.fillStyle = entry.color; ctx.fill();
     ctx.fillStyle = isDark ? '#C9C2B5' : '#3F3A32';
-    ctx.font = "500 10px 'DM Sans', sans-serif";
+    ctx.font = "500 10px 'Archivo', sans-serif";
     ctx.textAlign = 'left';
     ctx.fillText(entry.name, lx + 8, ly + 3);
   });

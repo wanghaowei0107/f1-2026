@@ -13,7 +13,7 @@ export function initComparison() {
   const btn = document.createElement('button');
   btn.className = 's-tab';
   btn.id = 'comparison-tab-btn';
-  btn.textContent = 'Compare';
+  btn.textContent = '车手对比';
   btn.onclick = () => showComparison('drivers');
   // Insert before the refresh button
   const refreshBtn = tabs.querySelector('.refresh-btn');
