@@ -12,6 +12,7 @@ import { initDriverProfile } from './driver-profile.js';
 import { initReplay } from './race-replay.js';
 import { initOnboard } from './onboard.js';
 import { initCircuitObserver } from './circuit.js';
+import { initInsights, renderInsights } from './insights.js';
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 export let currentSeason = 2026;
@@ -45,6 +46,7 @@ async function switchSeason(year) {
   }
   loadStandings(currentSeason, true);
   drawChart(getChartMode(), currentSeason);
+  renderInsights(currentSeason);
 }
 
 // ─── BIND GLOBAL EVENT HANDLERS ────────────────────────────────────────────
@@ -89,6 +91,7 @@ initDriverProfile();
 initReplay();
 initOnboard();
 initCircuitObserver();
+initInsights();
 
 // Replay + Onboard integration
 window._openReplay = async function(round, year) {

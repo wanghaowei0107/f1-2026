@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f1-2026-v7';
+const CACHE_NAME = 'f1-2026-v8';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   '/js/ics.js',
   '/js/circuit.js',
   '/js/circuit-map.js',
+  '/js/insights.js',
   '/manifest.json'
 ];
 
